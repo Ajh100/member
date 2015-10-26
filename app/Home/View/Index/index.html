@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$storeinfo.title} - 加盟商 - 捷和连锁</title>
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+
+</head>
+<body>
+
+<include file="Public:header" />
+
+<div class="content content-nobor">
+    <div class="index-entrance"><span class="fn-right">区域经理：{$userinfo.username}  {$userinfo.account}</span>快捷入口：<a href="/usedcar/add/">发布车源</a></div>
+	<div class="index-app-big">
+    	<ul>
+        	<li>
+            	<div class="app-big">
+                    
+                    <a href="#" style="background:#fda60b">
+                        <i class="icon-govern"></i>
+                        二手车源管理
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd> <a href="/usedcar/"><i class="icon-circle1"></i>二手车车源管理</a></dd><dd></dd><dd></dd><dd></dd>
+                </dl>
+            </li>
+            <li>
+                <div class="app-big">
+                     
+                    <a href="#" style="background:#4cc2cc;">
+                        <i class="icon-report"></i>
+                        新车源管理
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd>
+                         
+                        <a href="#">
+                            <i class="icon-circle11"></i>
+                            新车源管理
+                        </a>
+                    </dd>
+                    <dd>
+                    </dd>
+                    	
+                    <dd>
+                    </dd>
+                    
+                    <dd>
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                <div class="app-big"><a href="#" style="background:#5b56ce;"><i class="icon-issue"></i>促销信息</a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd>
+                        <a href="/salemsg/add/"><i class="icon-circle3"></i>发布促销</a>
+                    </dd>
+                    <dd>
+                    	<a href="/salemsg/?status=1"><i class="icon-circle10"></i>促销管理</a>
+                    </dd>
+                    <dd>
+                    </dd>
+                    <dd>
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                <div class="app-big">
+                    
+                    <a href="#" style="background:#ee395a">
+                        <i class="icon-sites"></i>
+                        公司信息
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd><a href="/store/"><i class="icon-circle5"></i>基本信息管理</a></dd>
+					<dd><a href="/saleman/"  ><i class="icon-circle6"></i>员工管理</a></dd>
+					<dd><a href="#"  ><i class="icon-circle6"></i>网店装修</a></dd>
+					<dd></dd>
+                </dl>
+            </li>
+            <li>
+                <div class="app-big">
+                     <span class="pop-num" id="outMsgNum" style="display:none">  </span>
+                    <a href="#" style="background:#375d81">
+                        <i class="icon-world"></i>
+                        留言管理
+                    </a>
+				</div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd>
+                        <span class="pop-num" id="inMsgNum" style="display:none"></span>
+                        <a href="#">
+                            <i class="icon-circle4"></i>
+                            店铺留言
+                        </a>
+                    </dd>
+                    <dd>
+                        <span class="pop-num" id="replyMsgNum" style="display:none"></span>
+                    <a href="#">
+                            <i class="icon-circle12"></i>
+                            车源评论管理
+                        </a>
+                    </dd>
+                    
+                    <dd>
+                    </dd>
+                    
+                    <dd>
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                <div class="app-big">
+                    <span class="pop-num">22</span>
+                    <a href="#">
+                        <i class="icon-sell"></i>
+                        询价管理
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd><span class="pop-num">22</span><a href="#"  ><i class="icon-circle8"></i>询价管理</a></dd><dd></dd><dd></dd><dd></dd>
+                </dl>
+            </li>
+            
+            <li>
+                <div class="app-big">
+                    <a href="#" style="background:#f84e34;">
+                        <i class="icon-data"></i>
+                        数据中心
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd><a href="#"><i class="icon-circle18"></i>流量统计</a></dd>
+					<dd></dd><dd></dd><dd></dd>
+                </dl>
+            </li>   
+            <li>
+                <div class="app-big">
+                    
+                    <a href="#" style="background:#dcdce4;">
+                        <i class="icon-bugle"></i>
+                        系统通知
+                    </a>
+                </div>
+                <dl class="index-app-small" style="display:none;">
+                	<dd>
+                        
+                        <a href="/notice/">
+                            <i class="icon-circle9"></i>
+                            通知
+                        </a>
+                    </dd>
+                    <dd>
+                    </dd>
+                    	
+                    <dd>
+                    </dd>
+                    
+                    <dd>
+                    </dd>
+                </dl>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+    
+
+
+    <script type="text/ecmascript" >
+        var isAuctionDealer = 0;
+        var msgCount = 0;
+        $(document).ready(function () {
+            
+            $("li").hover(function () {
+                $(this).find("div").css("display", "none");
+                $(this).find("dl").css("display", "");
+            }, function () {
+                $(this).find("div").css("display", "");
+                $(this).find("dl").css("display", "none");
+            });
+
+            GetReplyCount();
+        }); 
+    </script>
+
+
+</body>
+</html>

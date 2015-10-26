@@ -1,0 +1,63 @@
+/*头部*/
+.header{
+	width:100%;
+	height:50px;
+	background:#0d78d0;
+	text-align:center;
+	color:#FFF;
+}
+.header .logo{
+	float:left;
+	height:50px;
+	width:150px;
+	text-align:left;
+}
+.header .logo a{
+	color:#FFF;
+	font-size:20px;
+	font-family:"微软雅黑";
+	font-weight:bold;
+	line-height:50px;
+}
+.header .header-right{
+	float:right;
+}
+.header .header-right li{
+	float:left;
+	line-height:50px;
+}
+.header .header-right li.username {
+	line-height: 50px;
+	padding: 0 18px 0 10px;
+}
+.header .header-right li.quit{
+	background:url(../images/exit.png) no-repeat 10px center;
+	width:60px;
+	background-color:#60abeb;
+	text-indent:15px;
+}
+.header .header-right li.quit a{
+	color:#FFF;
+	display:block;
+}
+/* 导航 */
+.nav,.nav li,.nav li a,.nav{height:50px;line-height:50px;}
+.nav,.nav li,.nav{background:url(nav.png) no-repeat -9999px -9999px;}
+.nav{text-align:left;color:#fff;width:450px;float:left;}
+.nav li,.nav li a{display:inline-block;*display:inline;*zoom:1;}
+.nav li{padding:0 0 0 1px;font-size:14px;letter-spacing:normal;word-spacing:normal;background-position:0 -150px;}
+.nav li.first{background:none;}
+.nav li a,.nav li a:hover{text-decoration:none;color:#fff;}
+.nav li a{padding:0 20px;font-weight:bold;}
+
+/*功能导航*/
+.index-app-list{padding:1px 0 0;zoom:1; margin-top:20px;}
+.index-app-list ul{margin:-11px 0 0 -9px;}
+.index-app-list li{display:inline;float:left;width:234px;height:234px; margin:11px 0 0 11px; border:1px solid #999;}
+.index-app-list ul li .app-big {
+	overflow: hidden;
+	height: 232px;
+	position: relative;
+}
+
+.index-app-list i.icon-car{background:url(../images/ico-car.png) no-repeat center center;}

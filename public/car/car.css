@@ -1,0 +1,323 @@
+
+.freecont {
+width: 950px;
+border: 1px solid #a7cbf0;
+margin:20px;
+margin-left:auto;
+margin-right:auto;
+padding: 0px 20px;
+}
+.freecont .fh3 {
+width: 100%;
+margin: 17px 0 0 0px;
+height: 53px;
+line-height: 53px;
+border-bottom: 1px solid #D2D2D2;
+}
+.fh3 h2 {
+font-size: 20px;
+color: #5F5F5F;
+font-family: "微软雅黑";
+font-weight: bold;
+position: relative;
+z-index: -10;
+float:left;
+}
+.fh3 .right {
+float: right;
+}
+.line0 {
+width: 100%;
+height: 20px;
+border-top: 1px dotted #dfdfdf;
+margin: 0px;
+padding: 0px;
+overflow: hidden;
+}
+
+.dropdown{width:160px;position:relative; float:left; margin-right:10px; text-align:left;} 
+.input_select{text-indent:5px;width:160px; height:30px; line-height:30px;border:1px solid #D9D9D9;border-top-color:#c0c0c0;background:#fff;color:#000;z-index:100;} 
+.dropdown ul{width:160px; background:#e8f5fe;border:1px solid #a9c9e2; position:absolute;left:0;top:35px; display:none; overflow: scroll; overflow-x:hidden; height:265px;background-color: #fff;z-index:10000;
+box-shadow: 1px 1px 1px #efefef inset;} 
+.dropdown ul li p{font-weight:bold;height:24px;line-height:24px; padding:0; margin:0;} 
+.dropdown ul li{height:24px; line-height:24px; text-indent:5px} 
+.dropdown ul li a{display:block; height:24px; color:#000; text-decoration:none} 
+.dropdown ul li a:hover{background:#f93; color:#fff;}
+
+
+/* 颜色 */
+.t_color{width:720px;_width:730px;}
+.t_color li,.t_papers a{float:left;margin-right:10px;position:relative;margin-bottom:10px;_display:inline;}
+.t_color a:link,.t_color a:visited,.t_papers a:link,.t_papers a:visited{padding:0 10px;border:2px solid #dfdfdf;display:inline-block;line-height:26px;color:#838383;}
+.t_color a:hover,.t_papers a:hover{border:2px solid #fd6706;}
+.t_papers{height:30px;}
+.t_color a .eq{width:20px;height:20px;display:block;border:1px solid #DFDFDF;margin:2px 8px 0px -6px;float:left;_display:inline;}
+.t_color li.click,.t_papers  a.click:link,.t_papers  a.click:visited{height:26px;border:2px solid #fd6706;display:inline-block;background:url(/public/images/hot.png) right bottom no-repeat;}
+.t_color li.click a:link,.t_color li.click a:visited{border:0px;}
+
+
+.uplo_pic{width:100%;display:block;overflow:hidden;zoom:1;}
+.uplo_pic dl{height:136px;width:150px;*height:145px;_height:150px;}
+.uplo_pic dt{ display:block;width:120px;height:90px;padding:2px;border:2px solid #dfdfdf;position:relative;}
+.uplo_pic dd{width:68px;height:26px;float:left;margin-top:10px;}
+.uplo_pic dd a:link,.uplo_pic dd a:visited{width:58px;height:26px;line-height:26px;text-align:center;float:left;border:1px solid #dadada;background:#ececec;margin-right:10px; cursor:pointer;font-size:12px;color:#4f4f4f;}
+.uplo_pic li{float:left;margin-bottom:10px;margin-top:-7px;}
+.up-div{ background-color:#f6f6f6;border:1px solid #dadada;width:155px;height:135px;float:left;}
+.up-div .icon-up{ background:url(/public/images/btn_bg_v2.png); width:59px;height:50px;display:block;margin:15px auto 35px;background-position:0 -315px; position:relative;}
+.up-div .coed-box{width:80px;height:80px;margin:0 auto;margin-top:10px;margin-bottom:10px;display:block; }
+.up-div .up-tx{color:#666666;font-size:14px;font-size:14px; text-align:center;font-weight:bold;}
+.up-div-tx{width:100px;line-height:137px;font-size:20px;font-weight:bold; text-align:center;float:left;color:#666666;}
+.uplo_pic .up-div{width:124px;height:102px; float:inherit;}
+.uplo_pic .up-div .icon-up{margin:20px auto 32px;}
+
+.uplo_list{width:126px;height:150px;position:relative;margin-right:24px;float:left;}
+.up-div .up_zjfile{cursor: pointer;height: 135px;left: -48px;opacity: 0;outline: medium none;position: absolute;top: -15px;width: 155px;z-index:99;filter:alpha(opacity:0); }
+.up-left{position:absolute; left:-9999em;}
+
+.uplo_list-tx{width:126px;border:1px solid #dadada;border-right:0px;border-top:0px;overflow:hidden;}
+.uplo_list-tx a{width:124px;height:36px;line-height:36px;display:inline-block; text-align:center;border-right:1px solid #e4e4e4;font-size:12px;float:left;} 
+.uplo_list-tx a:link,.uplo_list-tx a:visited{color:#333333;}
+.uplo_list-tx a:hover,.uplo_list-tx a.cur:link,.uplo_list-tx a.cur:visited{ background-color:#f5a44f;color:#ffffff;}
+.uplo_list .up-div .up_zjfile{width:124px;height:102px;top:-20px;left:-32px;}
+
+span.twrong, span.twright {
+	display: inline-block;
+	line-height: 16px;
+	padding: 6px 6px 6px 28px;
+	font-size: 12px;
+	background:url(/public/images/wrong_right.png) no-repeat;
+	display:inline-block;
+	margin-left: 10px;
+	width:100px;
+}
+span.twrong{background-position: 0px -17px;height:13px;}
+span.twright{background-position: 0px 0px;height:13px;}
+
+#CarSubmit{
+	width: 109px;
+	height: 37px;
+	border: 0px;
+	display: inline-block;
+	cursor: pointer;
+	margin-right: 20px;
+	float: left;
+	background:url(/public/images/car_publish_btn.jpg) no-repeat;
+}
+
+
+.mydivbox {
+display:none;
+text-align: center;
+line-height: 40px;
+font-size: 12px;
+font-weight: bold;
+z-index: 10010;
+width: 800px;
+height: 600px;
+left: 50%;
+top: 50%;
+margin-left: -400px!important;
+margin-top: -300px!important;
+margin-top: 0px;
+position: fixed!important;
+position: absolute;
+_top: expression(eval(document.compatMode &&
+ document.compatMode=='CSS1Compat') ?
+ documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+ document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);
+}
+.bgpopo {
+background-color: #000;
+display: none;
+width: 100%;
+height: 100%;
+left: 0;
+z-index: 1000;
+top: 0;
+filter: alpha(opacity=50);
+opacity: 0.5;
+position: fixed!important;
+position: absolute;
+_top: expression(eval(document.compatMode &&
+ document.compatMode=='CSS1Compat') ?
+ documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+ document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);
+}
+
+
+
+/*损伤图*/
+#generatecar{
+	background:url(/public/images/generatecar_.png) no-repeat 0 0;
+	position:absolute;
+	width:500px;
+	height:316px;
+	top:0;
+	left:0;
+	border:1px solid #09F;
+	cursor:pointer;
+	background-color:#FFF;
+	display:none;
+}
+#generatecartool{
+	position:absolute;
+	bottom:-25px;
+	height:25px;
+	width:502px;
+	left:0;
+	top:318px;
+	text-align:center;
+	background:#FFF;
+	display:none;
+}
+#generatecartool a{
+	display:block;
+	width:60px;
+	height:25px;
+	margin-left:2px;
+	line-height:25px;
+	background:#333;
+	color:#FFF;
+	float:right;
+	text-align:center;
+}
+#generatecartool .left{
+	width:330px;
+	height:25px;
+	line-height:25px;
+	text-align:left;
+	text-indent:10px;
+	color:#F00;
+	float:left;
+}
+#generform{
+	width:100%;
+	height:10px;
+}
+.damage_ls {
+	width: 14px;
+	height: 14px;
+	position: absolute;
+	background-color:#F00;
+	border-radius: 100px;
+	display: block;
+	z-index:10000;
+	left:0;
+	top:0;
+	display:none;
+}
+.damage_lss {
+	width: 14px;
+	height: 14px;
+	position: absolute;
+	background-color: #38A2FF;
+	border-radius: 100px;
+	display: block;
+	z-index:10000;
+	left:0;
+	top:0;
+	color:#FFF;
+	font-size:12px;
+	text-align:center;
+	line-height:14px;
+}
+#DamageImgsUl .up-div .icon-up {
+	background: url(/public/images/btn_bg_v3.png);
+	width: 59px;
+	height: 50px;
+	display: block;
+	margin: 15px auto 35px;
+	background-position: 0 -315px;
+	position: relative;
+}
+
+.placeHolder div { background-color:white !important; border:dashed 1px gray !important; display:block;width:130px;height:136px; }
+
+a.zhijian{
+	padding:0;
+	cursor:pointer;
+}
+a.damageopen{
+	padding:0;
+	cursor:pointer;
+}
+#quality{
+	border:1px solid #CCC;
+	padding:12px;
+	margin-top:10px;
+	margin-bottom:20px;
+}
+#quality .title{
+	line-height:35px;
+	border-bottom:1px solid #CCC;
+	margin-bottom:10px;
+}
+#quality .line{
+	line-height:35px;
+}
+#quality .line label{
+	width:90px;
+	line-height:35px;
+	display:inline-table;
+	vertical-align:middle;
+}
+#quality .line .inputtxt{
+	width:115px;
+	height:20px;
+	border:1px solid #D9D9D9;border-top-color:#c0c0c0;
+}
+#quality .line span{
+	margin-right:30px;
+}
+.checkclick, .checkclickon a{display:block; text-align:center;}
+.checkclick a{color:#999;}
+.checkclickon a{color:#F00;}
+.checkclick{
+	border: 2px solid #dfdfdf;
+	text-align:center;
+	width:60px;
+	height:28px;
+	line-height:28px;
+	float:left;
+}
+.checkclickon{
+	width:60px;
+	height:28px;
+	line-height:28px;
+	float:left;
+	border: 2px solid #fd6706;
+	background: url(./images/hot.png) right bottom no-repeat;
+}
+
+a.opengenerater{margin-top:5px;background-color: #f5a44f;color: #ffffff;width:125px;height:35px;display:block;line-height:35px;text-align:center;}
+
+/* 通用自定义按钮-默认蓝色 */
+.u-btn{display:inline-block;*display:inline;*zoom:1;*overflow:visible;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;padding:0 12px;height:28px;line-height:28px;border:1px solid #2d88bf;font-size:12px;letter-spacing:1px;word-spacing:normal;text-align:center;vertical-align:middle;cursor:pointer;background:#54aede;}
+button.u-btn{*height:30px;_line-height:25px;}
+.u-btn,.u-btn:hover{color:#fff;text-decoration:none;}
+.u-btn:hover,.u-btn:focus{background:#399dd8;}
+.u-btn::-moz-focus-inner{padding:0;margin:0;border:0;}
+.u-btn .btntxt{margin-right:3px;_vertical-align:middle;}
+.u-btn .btnsel{display:inline-block;*display:inline;*zoom:1;width:0;height:0;overflow:hidden;vertical-align:middle;border-style:solid dashed dashed;border-width:4px 4px 0;border-color:#fff transparent transparent;}
+/* 较大 */
+.u-btn-lg{padding:0 15px;height:36px;line-height:36px;font-size:18px;}
+button.u-btn-lg{*height:38px;_line-height:33px;}
+.u-btn-lg .btnsel{border-width:5px 5px 0;}
+/* 较小 */
+.u-btn-sm{padding:0 10px;height:22px;line-height:22px;}
+button.u-btn-sm{*height:24px;_line-height:19px;}
+/* 红色 */
+.u-btn-c1{border-color:#9f161b;background:#de2027;}
+.u-btn-c1:hover,.u-btn-c1:focus{background:#cc1c23;}
+/* 黄色 */
+.u-btn-c2{border-color:#e1962d;background:#faa42b;}
+.u-btn-c2:hover,.u-btn-c2:focus{background:#f8960a;}
+/* 绿色 */
+.u-btn-c3{border-color:#52a552;background:#5cbc5c;}
+.u-btn-c3:hover,.u-btn-c3:focus{background:#50b150;}
+/* 灰色 */
+.u-btn-c4{border-color:#d0d0d0;background:#f3f3f3;}
+.u-btn-c4,.u-btn-c4:hover{color:#333;}
+.u-btn-c4:hover,.u-btn-c4:focus{background:#e7e7e7;}
+.u-btn-c4 .btnsel{border-top-color:#555;}
+.u-btn-c4:hover .btnsel,.u-btn-c4:focus .btnsel{border-top-color:#000;}

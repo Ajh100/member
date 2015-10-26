@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公司信息</title>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+		<script charset="utf-8" src="/public/kindeditor/kindeditor-min.js"></script>
+		<script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="txtDesc"]', {
+					resizeType : 1,
+					uploadJson : '{:U('editor/upload')}',
+					allowPreviewEmoticons : false,
+					allowImageUpload : true,
+					afterBlur: function(){this.sync();},
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+				});
+			});
+		</script>
+</head>
+
+<body>
+
+<include file="Public:header" />
+
+    <!--注解star-->
+    <div class="note">
+        <div class="note-return"><a href="/"><i class="icon"></i></a></div>
+        <div class="note-list-tab">
+            <div class="note-list-tab-nav">
+		<ul>
+			<li <eq name="map.status" value="1">class="current"</eq>><a href="/usedcar/?status=1">在售车源</a></li>
+			<li <eq name="map.status" value="2">class="current"</eq>><a href="/usedcar/?status=2">平行进口车</a></li>
+			<li <eq name="map.status" value="3">class="current"</eq>><a href="/usedcar/?status=3">下架车源</a></li>
+			<li <eq name="map.status" value="4">class="current"</eq>><a href="/usedcar/?status=4">已售</a></li>
+                        <li><a href="/saleman/">员工管理</a></li>
+                        <li><a href="/notice/">系统通知</a></li> 
+                        <li><a href="/store/password/">修改密码</a></li><li>
+                        <li class="current"><a href="/store/">公司信息</a></li>
+		</ul>
+            </div>
+        </div>
+    </div>
+    <!--注解end-->
+    <div class="content overflow">
+        <div class="website-signin">
+            <div class="basis" id="baseinfo">
+                <div class="round-title">
+                    <h3>基础信息</h3>
+                </div>
+                <ul>
+                    <li><span class="basis-li-l">公司名称：</span>
+                        <div class="basis-li-r">
+                            <span class=" basis-input">{$store.title}</span>
+                        </div>
+                    </li>
+                    <li><span class="basis-li-l"><span class="star">*</span>联系人：</span>
+                        <div class="basis-li-r">
+                            <input id="txtLinkman" name="txtLinkman" type="text" class=" basis-input" value="{$store.shopkeeper}" />
+                            <div><span class="twrong" style="display: none" id="wrongLinkman"></span></div>
+                        </div>
+                    </li>
+                    <li><span class="basis-li-l">所属地区：</span>
+                        <div class="basis-li-r">
+                            <span class=" basis-input">{$location}</span>
+                        </div>
+                    </li>
+                    <li><span class="basis-li-l"><span class="star">*</span>手机：</span>
+                        <div class="basis-li-r">
+                            <input id="txtMobile" name="txtPhone" type="text" class=" basis-input" value="{$store.phone}" />
+							<div><span class="twrong" style="display: none" id="wrongMobile"></span></div>
+                        </div>
+                    </li>
+                    <li><span class="basis-li-l">座机：</span>
+                        <div class="basis-li-r">
+                            <input id="txtPhone" name="txtMobile" type="text" class=" basis-input" value="{$store.tel}" />
+                        </div>
+						<div><span class="twrong" style="display: none" id="wrongphone"></span></div>
+                    </li>
+                    <li class="last"><span class="basis-li-l"><span class="star">*</span>公司地址：</span>
+                        <div class="basis-li-r">
+                            <input id="txtAddress" name="txtAddress" type="text" class=" basis-input" value="深圳市福田区景田侨香路1028号--万通达二手车城" />
+                            <div><span class="twrong" style="display: none" id="wrongAddress"></span></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+			
+			<!--
+            <div class="website-list">
+                <div class="round-title">
+                    <h3>特色服务</h3>
+                </div>
+                <ul class="result special" id="ulSerivceInfo">
+					<volist name="service" id="vo">
+                    <li <in name="vo.id" value="$store['service']">class="current"</in> onclick="serviceInfo_Onclick(this);" rel="{$vo.id}"><i></i><a href="javascript:void(0);">{$vo.title}</a></li>
+                    </volist>
+                </ul>
+            </div>
+            -->
+ 
+            <div class="website-list">
+                <div class="round-title">
+                    <h3>公司简介</h3>
+                </div>
+                <div class="intro-details">
+                    <textarea id="txtDesc" name="txtDesc" style="width:700px;height:350px;" class="ke-edit-textarea">{$store.describe}</textarea>
+                </div>
+            </div>
+
+            <div class="website-list">
+                <div class="round-title">
+                    <h3>公司图片</h3>
+                </div>
+                <div class="intro-pic">
+                    <ul class="papers" id="CompanyImage">
+						<volist name="storeimglist" id="vo">
+                        <li class="pic-list" id="uploadLastLi">
+							<div class="pic" id="divPassportImg">
+                               <a href="javascript:void(0);"><img width="180" height="135" src="{$Think.config.WEB_IMG_URL}{$vo}" /></a>
+                            </div>
+						
+						</li>
+						</volist>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="website-list">
+                <div class="save-btn">
+                    <a href="javascript:void(0);" id="btnSave" class="btn btn-org">保存</a>
+                </div>
+            </div>
+
+            <div style="display: none">
+                <input type="hidden" id="txtServiceInfo" name="txtServiceInfo" value="" />
+				
+            </div>
+        </div>
+    </div>
+<include file="Public:footer" />
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+        $('#btnSave').on('click', function () {
+			getBusinessClass();
+            if (checkLinkMan() && checkMobile() && checkAddress()) {
+                getBusinessClass();
+                var valdate = {
+					txtLinkman: $('#txtLinkman').val(),
+                    txtMobile: $("#txtPhone").val(),
+                    txtPhone: $("#txtMobile").val(),
+                    txtAddress: $("#txtAddress").val(),
+                    txtDesc: $("#txtDesc").val(),
+                    //txtServiceInfo: $("#txtServiceInfo").val()
+                };
+                $.post("{:U('store/update')}",
+                    valdate,
+                    function (ret) {
+                        if (ret == 1) {
+                            alert('修改成功');
+                            $("#layer1").layer('show');
+                        }
+                        else if (ret == 0) {
+                            $("#layer1 .delete").text("修改失败");
+                            $("#layer1").layer('show');
+                        }
+
+                }, "json");
+            }
+        });
+</script>
+<script type="text/javascript">
+
+
+    $("#baseinfo input").on('blur', '', function () {
+        var inputid = $(this).attr("id");
+        switch (inputid) {
+            case "txtLinkman":
+                checkLinkMan();
+                break;
+            case "txtMobile":
+                checkMobile();
+                break;
+            case "txtAddress":
+                checkAddress();
+                break; 
+        }
+    })
+
+    //设置错误提示
+    function SetSpanWrongTip(span, msg) {
+        $("#" + span).html(msg);
+        $("#" + span).show();
+    }
+    //设置正确提示
+    function SetSpanRightTip(span) {
+        $("#" + span).hide();
+    }
+
+    function checkPhone() {
+        var txtph = $("#txtPhone").val();
+        if (txtph != ""){
+            if ((/^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/).test(txtph)) {
+                SetSpanRightTip("wrongphone");
+                return true;
+            }
+            else {
+                SetSpanWrongTip("wrongphone", "座机错误");
+                return false;
+            }
+        }else{
+            SetSpanRightTip("wrongphone");
+            return true;
+       }
+    }
+
+
+    //验证联系人
+    function checkLinkMan() {
+        var linkman = $('#txtLinkman').val();
+        if (linkman == null || linkman == "" || linkman.length > 8) {
+            SetSpanWrongTip("wrongLinkman", "联系人输入不正确");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongLinkman");
+            return true;
+        }
+    }
+	
+    //验证手机
+    function checkMobile() {
+        var phone = $('#txtMobile').val();
+        var reg = new RegExp("^1[3,4,5,7,8]{1}[0-9]{1}[0-9]{8}$", "ig");
+        if (reg.test(phone)) {
+            SetSpanRightTip("wrongMobile");
+            return true;
+        }
+        else {
+            SetSpanWrongTip("wrongMobile", "手机输入不正确");
+            return false;
+        }
+    }
+	
+    //验证公司地址
+    function checkAddress() {
+        var address = $('#txtAddress').val();
+        if (address == null || address.length < 1 || $.trim(address) == "") {
+            SetSpanWrongTip("wrongAddress", "公司地址输入不正确");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongAddress");
+            return true;
+        }
+    }
+
+    //获取选择的服务信息，并填入input控件
+    function getBusinessClass() {
+        var business = "";
+        var li = $("#ulSerivceInfo li");
+        for (var i = 0; i < li.length; i++) {
+            if ($(li[i]).hasClass("current")) {
+                business += $(li[i]).attr("rel") + ",";
+            }
+        }
+        $("#txtServiceInfo").val($.trim(business).substring(0, business.length - 1));
+    }
+
+
+    //服务信息的点击事件
+    function serviceInfo_Onclick(li) {
+        if ($(li).hasClass("current")) {
+            $(li).removeClass("current");
+        }
+        else {
+            $(li).addClass("current");
+        }
+    }
+
+</script>

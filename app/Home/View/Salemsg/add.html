@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+		<script charset="utf-8" src="/public/kindeditor/kindeditor-min.js"></script>
+		<script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="content"]', {
+					resizeType : 1,
+					uploadJson : '{:U('editor/upload')}',
+					allowPreviewEmoticons : false,
+					allowImageUpload : true,
+					afterBlur: function(){this.sync();},
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+				});
+			});
+		</script>
+
+</head>
+
+<body>
+
+<include file="Public:header" />
+
+    <!--注解star-->
+    <div class="note">
+      <div class="note-return">
+          <a href="/"><i class="icon"></i></a>
+      </div>
+      <div class="note-list-tab">
+  	    <div class="note-list-tab-nav">
+            <ul>
+                <li class="current"><a href="/salemsg/add/">发布促销</a></li><li><a  href="/salemsg/">促销管理</a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <!--注解end-->
+    <!--输入区域start-->
+    <div class="content">
+  	    <div class="manage-list">
+    	     <ul class="promo-issue">
+        	    <li >
+            	    <span class="issue-name">促销标题：</span>
+            	    <div class="issue-list">
+                       <input id="txtTitle" name="txtTitle" type="text" class="title-input" value="" maxlength="50" />
+                       <div id="errortitle" class="col99" style="display:none">请填写促销标题，最多50个字符</div>
+                    </div>   
+                </li>
+                <li >
+            	    <span class="issue-name">促销内容：</span>
+            	    <div class="issue-list">
+                       <div class="edit-box">
+                            <textarea id="txthidContent" name="content" style="width: 100%" rows="25" cols="20" class="ke-edit-textarea"></textarea>
+                       </div>
+                       <div id="errorcontent" class="col99" style="display:none">请填写促销内容</div>
+                    </div>   
+                </li> 
+                <li >
+            	    <span class="issue-name"></span>
+            	    <div class="issue-list btn-box">
+                       <a id="btnSave" href="javascript:void(0)" onclick="saveInfo();" class="btn btn-org mr10">发布</a>
+                  </div>   
+                </li>
+            </ul>  
+        </div>
+    </div>
+    <!--输入区域end-->
+    <!--底部star-->
+</body>
+</html>
+<script type="text/javascript">
+    /*检查标题的输入*/
+    function checkTitle() {
+        var title = $('#txtTitle').val();
+        if ((title == null) || (title.length == 0) || (title.length > 50)) {
+            $("#errortitle").show();
+            return false;
+        }
+        else {
+            $("#errortitle").hide();
+            return true;
+        }
+    }
+
+    /*检查内容的输入*/
+    function checkContent() {
+        var content = $("#txthidContent").val();
+        if ((content == null) || (content.length == 0)) {
+            $("#errorcontent").show();
+            return false;
+        }
+        else {
+            $("#errorcontent").hide();
+            return true;
+        }
+    }
+
+	
+    //保存信息
+    function saveInfo() {
+        if (checkTitle() && checkContent()) {
+			var sendData = {
+				'txtTitle' : $('#txtTitle').val(),
+				'txthidContent' : $("#txthidContent").val()
+			};
+            $.ajax({
+                type: 'POST',
+                url: '/salemsg/add/',
+                dataType: 'json',
+                data: sendData,
+				success: function (data) {
+                    if (data == 100) {
+                        alert('添加成功');
+                        window.location.href = "/salemsg/";
+                    }
+                    else {
+                        alert("保存失败");
+                    }
+                }
+            });
+        }
+    }
+</script>

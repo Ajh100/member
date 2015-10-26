@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+<include file="Public:header" />
+    <!--头部end-->
+    <!--注解star-->
+    <div class="note">
+      <div class="note-return">
+      <a href="{:U('index/index')}"><i class="icon"></i></a></div>
+      <div class="note-list-tab">
+  	    <div class="note-list-tab-nav">
+            <ul>
+                <li><a href="/salemsg/add/">发布促销</a></li><li class="current"><a  href="/salemsg/">促销管理</a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <!--注解end-->
+    <!--列表菜单star-->
+    
+    <div class="manage-sect">
+        <span class="fn-left">促销状态：</span>
+	    <ul class="result">
+          <li <eq name="Think.get.status" value="">class="current"</eq>><i></i><a href="/salemsg/" class="time"><span>全部促销</span><em id="orderColor"></em></a></li>
+          <li <eq name="Think.get.status" value="1">class="current"</eq>><i></i><a href="/salemsg/?status=1" class="time"><span>展示中</span><em id="Em1"></em></a></li>
+          <li <eq name="Think.get.status" value="2">class="current"</eq>><i></i><a href="/salemsg/?status=2" class="time"><span>已下架</span><em id="Em2"></em></a></li>
+        </ul>
+	</div>
+    
+    <!--列表菜单end-->
+    <!--促销列表start-->
+    <div class="content">
+  	    <div class="manage-list">
+    	    <h3 class="title">
+                <ul class="result">
+                  <li><i></i><a href="javascript:void(0);" class="time" onclick="ChangeOrder(this)"><span>发布时间</span><em></em></a></li>
+                </ul>
+                <span id="spAllDel" class="fn-left"><label class="lable"><input id="cbAll" type="checkbox" onclick="AllSelect();">全选</label><a id="btnDel" href="javascript:void(0);" class="btn btn-org" style="display:none">删除</a></span>
+    	    </h3>
+            <ul id="ulList" class="promotion-ul" style="display:">
+			<volist name="list" id="vo">
+				<li id="li_{$vo.id}" value="{$vo.id}">
+				<span class="pop-new"></span>
+				<div class="promotion-box">
+					<div class="car-name"><a href="#" target="_blank">{$vo.title}</a></div>
+					<div class="car-list car-list-one"><eq name="vo.status" value="1">展示中</eq><eq name="vo.status" value="2">已下架</eq></div>
+					<div class="car-list car-list-two">{$vo.addtime|date="Y-m-d",###}</div>
+					<div class="car-list car-list-three">
+						<eq name="vo.status" value="1"><a href="javascript:void(0)" class="btn btn-blue" data-target="#layer2" value="{$vo.id}">下架</a></eq>
+						<eq name="vo.status" value="2"><a href="javascript:void(0)" class="btn btn-blue" data-target="#layer3" value="{$vo.id}">重新发布</a></eq>
+						<a href="/salemsg/edit/?id={$vo.id}" class="btn btn-blue" value="{$vo.id}">修改</a>
+						<a href="javascript:void(0)" class="btn btn-blue" data-target="#layer1" value="{$vo.id}">删除</a>
+					</div>
+				</div>
+				</li>
+			</volist>
+			</ul>
+			<div id="divNoList" class="manage-no" style="display:none">暂无促销</div>
+        </div>  
+    </div>
+    <!--促销列表end-->
+    <div class="gotop02" data-toggle="gotop">
+    <a class="gotop02-con" href="javascript:void(0);" data-scroll="true" data-gotop="true">
+        <i></i>
+        <span>返回顶部</span>
+    </a>
+    </div>
+	
+    <!--弹窗star-->
+    <div class="layer fn-hide" id="layer1" >
+        <h3>删除<a class="layer-close" href="javascript:void(0)" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+        <div class="layer-content">
+    	    <div class="delete">是否确定删除该条促销信息</div>
+        </div>
+        <div class="layer-bottom"><a href="javascript:void(0)" class="btn btn-blue mr10" a_id="del">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+    </div>
+
+    <div class="layer fn-hide" id="layer2" >
+        <h3>下架<a class="layer-close" href="javascript:void(0)" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+        <div class="layer-content">
+    	    <div class="delete">是否确定下架该促销信息</div>
+        </div>
+        <div class="layer-bottom"><a href="javascript:void(0)" class="btn btn-blue mr10" a_id="off">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+    </div>
+
+    <div class="layer fn-hide" id="layer3" >
+        <h3>重新发布<a class="layer-close" href="javascript:void(0)" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+        <div class="layer-content">
+    	    <div class="delete">是否确定重新发布该促销信息</div>
+        </div>
+        <div class="layer-bottom"><a href="javascript:void(0)" class="btn btn-blue mr10" a_id="republish">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+    </div>
+
+    <div class="layer fn-hide" id="layer4" >
+        <h3>全部删除<a class="layer-close" href="javascript:void(0)" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+        <div class="layer-content">
+    	    <div class="delete">是否确定删除全部促销信息</div>
+        </div>
+        <div class="layer-bottom"><a href="javascript:void(0)" class="btn btn-blue mr10" a_id="alldel">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+    </div>
+    <!--弹窗end-->
+</body>
+<script type="text/javascript" src="/public/js/seajs/sea.js"></script>
+<script type="text/javascript">
+    var dealerId = "50097";
+    var type = "2"; //促销列表类型
+    var rowNum = 138; //总记录数
+    var curIndex = 1; //开始的记录号
+    var pageSize = 20; //每页记录数
+    var islist = true; //操作标记
+    var order = 0; //排序标记，0倒序，1正序
+    var id = 0; //要操作的促销ID
+
+    /*设置顶部导航的默认选中样式*/
+    function setTypeSelect() {
+        var t = parseInt(type);
+        if (t < 4) {
+            $(".note-list-tab-cont li:eq(0)").addClass("current");
+            if (t == 1) {
+                $(".manage-sect li:eq(0)").addClass("current");
+            }
+            else if (t == 2) {
+                $(".manage-sect li:eq(1)").addClass("current");
+            }
+            else if (t == 3) {
+                $(".manage-sect li:eq(2)").addClass("current");
+            }
+        }
+        if (t == 4) {
+            $(".note-list-tab-cont li:eq(1)").addClass("current");
+        }
+        if (t == 5) {
+            $(".note-list-tab-cont li:eq(2)").addClass("current");
+        }
+    }
+
+    $(document).ready(function () {
+
+        if (curIndex > rowNum) {
+            $("#ulList").attr("style", "display:none");
+            $("#divNoList").attr("style", "display:");
+            $("#divFooter").css("display", "");
+        }
+        else {
+            $("#ulList").attr("style", "display:");
+            $("#divNoList").attr("style", "display:none");
+            $("#divFooter").css("display", "none");
+            if (($(window).height() + $(window).scrollTop()) >= $("body").height()) {
+                ContentList(0);
+            }
+            $(window).scroll(function () {
+                var body = $("body").height();
+                var bottom = $("footer").height();
+                if (($(window).height() + $(window).scrollTop()) >= body) {
+                    if (islist) {
+                        islist = false;
+                        ContentList(0);
+                    }
+                }
+            });
+        }
+    });
+
+    /*获取促销信息列表*/
+    function ContentList(flag) {
+        if (flag == 0) {
+            if (curIndex > rowNum) {
+                return;
+            }
+        }
+        var data = "did=" + dealerId + "&sindex=" + curIndex + "&t=" + type + "&o=" + order;
+        curIndex = curIndex + pageSize;
+        $.get("/Handler/PromoteManager/GetPromoteList.ashx", data, function (ret) {
+            if (ret != null && ret != "" && ret != "undefined") {
+                islist = true;
+                var arrRet = ret.split('#$#');
+                rowNum = parseInt(arrRet[0]); //总记录数
+                if (rowNum > 0) {
+                    if (flag == 0)
+                        $(".promotion-ul").append(arrRet[1]);
+                    else
+                        $(".promotion-ul").html(arrRet[1]);
+
+                    $("#ulList").attr("style", "display:");
+                    $("#divNoList").attr("style", "display:none");
+
+                    if (curIndex >= rowNum) {
+                        $("#divFooter").css("display", "");
+                    }
+                    else {
+                        $("#divFooter").css("display", "none");
+                    }
+                    AllSelect();
+                    BindHover();
+                }
+                else {
+                    $("#cbAll").attr("checked", false);
+                    $("#btnDel").hide();
+                    $("#ulList").attr("style", "display:none");
+                    $("#divNoList").attr("style", "display:");
+                    $("#divFooter").css("display", "");
+                }
+            }
+        })
+    }
+
+    /*排序切换*/
+    function ChangeOrder(obj) {
+        var em = $(obj).find("em");
+        curIndex = 1;
+        if (em.hasClass("down")) {
+            em.removeClass("down");
+            order = 0; //倒序
+        }
+        else {
+            em.addClass("down");
+            order = 1; //正序
+        }
+        if (rowNum > 0) {
+            ContentList(1);
+        }
+    }
+
+    /*弹框*/
+    seajs.config({ version: "1392621587520" });
+
+    seajs.use(["jquery", "select", "layer", "gotop"], function ($) {
+        $('#gotop').on('show', function () {
+
+        });
+
+    });
+
+    seajs.use(["jquery", "select", "layer", "support"], function ($) {
+
+        /*重新发布，下架，删除按钮点击事件，弹框*/
+        $('.promotion-ul').on('click', '.btn-blue', function () {
+            id = $(this).attr('value');
+            $($(this).attr('data-target')).layer('show');
+        });
+
+        /*全部删除按钮点击事件，弹框*/
+        $('#spAllDel').on('click', '.btn-org', function () {
+            if (rowNum > 0) {
+                if ($("#cbAll").attr("checked")) {
+                    $('#layer4').layer('show');
+                }
+            }
+        });
+
+        /*重新发布，下架，删除弹出框的确认按钮点击事件*/
+        $(".layer .btn-blue").on('click', function () {
+            PromoteOperate($(this).attr('a_id'), $(this).closest('.layer').get(0).id);
+        });
+
+        /*执行对促销信息的操作*/
+        function PromoteOperate(action, layerid) {
+            if (action == "alldel") { //全部删除处理                
+                var ids = "";
+                $(".promotion-ul li").each(function (i) {
+                    if ($(this).css("display") != "none") {
+                        ids += $(this).attr("value") + ",";
+                    }
+                });
+
+                if (ids.length == 0) {
+                    return;
+                }
+                var data = "action=" + action + "&ids=" + ids;
+                $.get("/salemsg/promotesetting/", data, function (ret) {
+                    if (ret == 1) {
+                        $("#" + layerid).layer('hide');
+                        location.reload() 
+                    }
+                });
+            }
+            else { //重新发布，下架，删除处理
+                if (id == 0) {
+                    return false;
+                }
+                var data = "action=" + action + "&id=" + id;
+                $.get("/salemsg/promotesetting/", data, function (ret) {
+                    if (ret == 1) {
+                        $("#" + layerid).layer('hide');
+                        $("#li_" + id).remove();
+                        id = 0;
+                        rowNum--;
+                        curIndex--;
+                        if (rowNum <= 0) {
+                            $("#cbAll").attr("checked", false);
+                            $("#btnDel").hide();
+                            $("#ulList").attr("style", "display:none");
+                            $("#divNoList").attr("style", "display:");
+                            $("#divFooter").css("display", "");
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    /*全选，全不选*/
+    function AllSelect() {
+        $("#btnDel").hide();
+        if (rowNum > 0) {
+            if ($("#cbAll").attr("checked")) {
+                $("#btnDel").show();
+                $(".promotion-ul li:not(:hidden)").addClass("hover");
+            }
+            else {
+                $(".promotion-ul li:not(:hidden)").removeClass("hover");
+            }
+        }
+    }
+
+    /*鼠标滑过*/
+    function BindHover() {
+        $(".promotion-ul li").hover(function () {
+            if ($(this).hasClass("current")) {
+                $(this).removeClass("current");
+            }        
+        }, function () {
+            if ($(this).hasClass("current")) {
+                $(this).removeClass("current");
+            }        
+        });
+    }
+
+
+    </script>
+</html>
+

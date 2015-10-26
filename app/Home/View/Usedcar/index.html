@@ -1,0 +1,870 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>车源管理</title>
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<link href="/public/css/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/public/js/Common.js"></script>
+</head>
+
+<body>
+
+<include file="Public:header" />
+
+<div class="note">
+  <div class="note-return"><a href="/"><i class="icon"></i></a></div>
+  <div class="note-list-tab">
+	<div class="note-list-tab-cont">
+		<a class="issue" href="/usedcar/add/">发布车源</a>
+		<ul>
+			<li <eq name="map.status" value="1">class="current"</eq>><a href="/usedcar/?status=1">在售车源</a></li>
+			<li <eq name="map.status" value="2">class="current"</eq>><a href="/usedcar/?status=2">平行进口车</a></li>
+			<li <eq name="map.status" value="3">class="current"</eq>><a href="/usedcar/?status=3">下架车源</a></li>
+			<li <eq name="map.status" value="4">class="current"</eq>><a href="/usedcar/?status=4">已售</a></li>
+            <li <eq name="Think.CONTROLLER_NAME" value="Saleman">class="current"</eq>><a href="/saleman/">员工管理</a></li>
+            <li <eq name="Think.CONTROLLER_NAME" value="Notice">class="current"</eq>><a href="/notice/">系统通知</a></li> 
+            <li <eq name="Think.ACTION_NAME" value="Password">class="current"</eq>><a href="/store/password/">修改密码</a></li><li>
+            <li <eq name="Think.CONTROLLER_NAME" value="Store">class="current"</eq>><a href="/store/">公司信息</a></li>
+		</ul>
+	</div>
+  </div>
+</div>
+<!--注解end-->
+<!--列表菜单star-->
+<div class="manage-sect">
+	<div class="search02">
+    	<div class="search02-l"><i></i></div>
+        <div class="search02-r">
+		<form action="__APP__/usedcar/?status={$map.status}" method="post">
+        	<input name="search" maxlength="20" type="text" value="" class="input"><input name="" class="btn" type="submit" value="快速搜索" style="color:#fff;border:0;" />
+			<input name="status" value="{$map.status}" type="hidden" />
+		</form>
+        </div>
+    </div>
+	
+	<div class="select select2" id="divLinkBrand" data-toggle="select">
+		<div class="select-selected"><span>品牌</span><i class="icon10 icon10-down1"></i></div>
+		<div class="select-option">
+			<dl>
+			<dd><b></b><a href="/usedcar/?status={$Think.get.status}">全部</a></dd>
+			<volist name="brandlist" id="vo">
+			<dd><b></b><a href="/usedcar/?bid={$vo.id}&<neq name="map.uid" value="">uid={$map.uid}&</neq>status={$map.status}">{$vo.title}</a></dd>
+			</volist>
+			</dl>
+		</div>
+   </div>	
+   
+	<div class="select select2" id="divLinkMan" data-toggle="select">
+		<div class="select-selected"><span>销售代表</span><i class="icon10 icon10-down1"></i></div>
+		<div class="select-option">
+			<dl>
+			<dd><b></b><a href="/usedcar/?status={$Think.get.status}">全部</a></dd>
+			<volist name="saleman" id="vo">
+			<dd><b></b><a href="/usedcar/?<neq name="map.brand_id" value="">bid={$map.brand_id}&</neq>uid={$vo.id}&status={$Think.get.status}">{$vo.nickname}</a></dd>
+			</volist>
+			</dl>
+		</div>
+   </div>
+    
+</div>
+<!--列表菜单end-->
+<div class="content">
+  	<div class="manage-list">
+    	<h3 class="title">
+			<ul class="result">
+				<!--<li><a href="javascript:void(0);" onclick="ChangeOrder(this)" class="time"><span>按发布时间</span><em></em></a></li>-->
+			</ul>
+			<span>车源总数<a href="#" class="fontb">{$count}</a>辆</span>
+		</h3>
+        
+            <ul class="manage-list-ul man-list-ul">
+            
+            
+			<volist name="list" id="vo">
+			<li id="li{$vo.id}" >
+				<div class="car-box">
+					<div class="car-pic">
+					<span class="icon24-jian"></span>
+					<a target="_blank" href="#">
+						<img src="{:C('WEB_IMG_URL')}{$vo.cover}" width="120" height="90" />
+					</a>
+					</div>
+					<div class="car-name-box">
+					<div class="car-s-name"><a target="_blank" href="{:C('WEB_HOME_URL')}car/detail/{$vo.id}.html">{$vo.title}</a></div>
+					</div>
+					<eq name="map.status" value="1">
+					<div class="car-list car-list2 car-list-one"><div>售价：{$vo.price}万</div><div>里程：{$vo.mileage}万公里</div></div>
+					<div class="car-list car-list2 car-list-two"><div>上牌时间：{$vo['regtime'] ? date('Y-m', strtotime($vo['regtime'])) : '未上牌'}</div><div>发布时间：{$vo.addtime|date="Y-m-d",###}</div></div>
+					<div class="car-list car-list2 car-list-three"><div>浏览次数：{$vo.clicktimes}</div><div>销售代表：{$vo.uid|get_car_saleman}</div></div>
+					<div>
+						<a href="/usedcar/edit/?id={$vo['id']}" class="btn btn-blue">修改车源</a>
+						<a href="javascript:void(0)" value="{$vo.id}" data-target="#layer_os"  class="btn btn-blue">下架/已售</a>
+						<a href="javascript:void(0)" id="tejia{$vo.id}" value="{$vo.id}" data-target="#layer_a"  class="btn btn-blue">设置特价</a>
+						<a href="javascript:void(0)" id="reli{$vo.id}" value="{$vo.id}" data-target="#<eq name="vo.recommend" value="2">layer_req<else/>layer_re</eq>"  class="btn btn-blue"><eq name="vo.recommend" value="2">取消推荐<else/>设置推荐</eq></a>
+						<a href="javascript:void(0)" value="{$vo.id}" data-target="#layer_d" class="btn btn-blue">删除车源</a>
+					</div>
+					</eq>
+					
+					<eq name="map.status" value="2">
+					<div class="car-list car-list2 car-list-one"><div>售价：{$vo.price}万元</div><div>里程：{$vo.mileage}万公里</div></div>
+					<div class="car-list car-list2 car-list-two"><div>上牌时间：{$vo['regtime'] ? date('Y-m', strtotime($vo['regtime'])) : '未上牌'}</div><div>发布时间：{$vo.addtime|date="Y-m-d",###}</div></div>
+					<div class="car-list car-list2 car-list-three"><div>特价：{$vo.specialprice}万元</div><div>销售代表：{$vo.uid|get_car_saleman}</div></div>
+					<div>
+						<a href="javascript:void(0)" id="qxtejia{$vo.id}" value="{$vo.id}" data-target="#layer_aq"  class="btn btn-blue">取消特价</a>
+						<a href="javascript:void(0)" value="{$vo.id}" data-target="#layer_os" class="btn btn-blue">下架/已售</a>
+					</div>
+					</eq>
+					
+					<eq name="map.status" value="3">
+					<div class="car-list car-list2 car-list-one"><div>售价：{$vo.price}万元</div><div>里程：{$vo.mileage}万公里</div></div>
+					<div class="car-list car-list2 car-list-two"><div>上牌时间：{$vo['regtime'] ? date('Y-m', strtotime($vo['regtime'])) : '未上牌'}</div><div>下架时间：{$vo.overtime|date="Y-m-d",###}</div></div>
+					<div class="car-list car-list2 car-list-three"><div>浏览次数：{$vo.clicktimes}</div><div>销售代表：{$vo.uid|get_car_saleman}</div></div>
+					<div>
+						<a href="{:U('usedcar/edit',array('id'=>$vo['id']))}" target="_blank" class="btn btn-blue">查看车源</a>
+						<a href="javascript:void(0)" value="{$vo.id}" data-target="#layer_u" class="btn btn-blue">重新发布</a>
+					</div>
+					</eq>
+					
+					<eq name="map.status" value="4">
+					<div class="car-list car-list2 car-list-one"><div>售价：{$vo.price}万元</div><div>客户：{$vo.buyname}</div></div>
+					<div class="car-list car-list2 car-list-two"><div>客户电话：{$vo.buymobile}</div><div>已售时间：{$vo.selltime|date="Y-m-d",###}</div></div>
+					<div class="car-list car-list2 car-list-three"><div>最终售价：{$vo.sellprice}万元</div><div>销售代表：{$vo.uid|get_car_saleman}</div></div>
+					<div>
+						<a href="{:C('WEB_HOME_URL')}car/detail/{$vo.id}.html" target="_blank" class="btn btn-blue">查看车源</a>
+                        <a href="javascript:void(0)" value="{$vo.id}" data-target="#layer_d" class="btn btn-blue">删除车源</a>
+					</div>
+					</eq>
+					
+				</div>
+			</li>
+			</volist>
+			</ul>
+			
+			
+    </div>
+	
+	
+</div>
+<div class="flickr" style="width:988px;margin:0 auto;padding:10px 0 10px 0;text-align:center">{$page}</div>
+<div class="gotop02" data-toggle="gotop">
+    <a class="gotop02-con" href="javascript:void(0);" data-scroll="true" data-gotop="true">
+        <i></i>
+        <span>返回顶部</span>
+    </a>
+</div>
+
+<include file="Public:footer" />
+
+<div class="layer fn-hide" id="layer_u" >
+    <h3>重新发布<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="#"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><span class="col66"></span></div>
+            </div>
+            </div>
+            <div class="clear"></div> 
+            <div class="sold-out">
+            <ul>
+                <li ><span class="part2-l"><span style="color:red;">*</span>  车源售价：</span>
+                    <div class="part2-r">
+                        <input type="text" value="" id="txtNewPrice" maxlength="6" class="input1" >万元
+               <div class="clear"></div>
+                <div class="line-h"><span class="wrongred"></span></div>
+            	</div>
+                </li>
+                <li class="remove"><a href="#">修改该车其他信息&gt;&gt;</a>
+                </li>
+            </ul>
+        </div>        
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="update" class="btn btn-blue mr10">重新发布</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+<div class="layer fn-hide" id="layer_d">
+    <h3>删除车源<a class="layer-close" data-dismiss="layer" href="javascript:void(0)"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="#"><img src=""  /></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <p class="col99"><span class="p-span"></span><span class="p-span"></span></p>
+                <p><span class="p-span redfw"></span><span class="col66"></span></p>
+            </div>
+        </div>
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)"  a_id="del" class="btn btn-blue mr10">确定</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+    <div class="layer fn-hide" id="layer_a" >
+    <h3>设置特价<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="javascript:void(0)"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><span class="col66"></span></div>
+            </div>
+            </div>
+            <div class="clear"></div> 
+            <div class="sold-out">
+            <ul>
+                <li><span class="part2-l">车源特价：</span>
+                    <div class="part2-r">
+                        <input type="text" id="txtPrice" value="" class="input1" >万元
+               <div class="clear"></div>
+                <div class="line-h"><span class="wrongred"></span></div>
+            	</div>
+                </li>
+                <li><span class="part2-l">设置特价：</span>
+                    <div class="part2-r">显示为特价车<div class="clear"></div>
+            	</div>
+                </li>
+            </ul>
+        </div>        
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="setsell" class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+
+    <div class="layer fn-hide" id="layer_aq" >
+    <h3>取消特价<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="javascript:void(0)"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><span class="col66"></span></div>
+            </div>
+            </div>
+            <div class="clear"></div>     
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="setdown" class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+
+<div class="layer fn-hide" id="layer_os" >
+    <h3>修改车源状态<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="#"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><span class="col66"></span></div>
+            </div>
+            </div>
+            <div class="clear"></div> 
+            <div class="sold-out">
+            <ul>
+                <li id="lilayer_os1"><span class="part2-l">车源状态：</span>
+                    <div class="part2-r out-handle">
+                        <ul class="result">
+                        <li ><i></i><a href="javascript:void(0);" class="time"><span>下架</span><em ></em></a></li>
+                        <li class="current"><i></i><a href="javascript:void(0);" class="time"><span>已售</span><em ></em></a></li>
+                        </ul>
+                        <div class="clear"></div>               
+                    </div>
+                </li>
+                <li id="lilayer_os2"><span class="part2-l"> <span style="color:red;">*</span>  售价：</span>
+                    <div class="part2-r">
+                        <input type="text" value="" maxlength="6" li_id="#lilayer_os2"  id="txtSellPrice" class="input1" >万元
+               <div class="clear"></div>
+                <div class="line-h"><span class="wrongred"></span></div>
+            	</div>
+                </li>
+                 <li id="lilayer_os3"><span class="part2-l">买主姓名：</span>
+                    <div class="part2-r">
+                        <input type="text" value="" maxlength="4"  li_id="#lilayer_os3" id="txtBuyName" class="input1" >
+               <div class="clear"></div>
+                <div class="line-h"><span class="wrongred"></span></div>
+            	</div>
+                </li>
+                <li id="lilayer_os4"><span class="part2-l">买主手机号：</span>
+                    <div class="part2-r">
+                        <input type="text" value="" maxlength="11"  li_id="#lilayer_os4" id="txtBuyMobile" class="input1" >
+               <div class="clear"></div>
+                <div class="line-h"><span class="wrongred"></span></div>
+            	</div>
+                </li>
+            </ul>
+        </div>        
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="updatestatus"  class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+ <div class="layer fn-hide" id="layer_re" >
+    <h3>设置推荐<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="javascript:void(0)"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><div class="fn-hide"><span id="repv"></span></div></div>
+            </div>
+            </div>
+            <div class="clear"></div> 
+            <div class="de-tx">推荐车源展示优先于普通车源
+        </div>        
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="recommend" class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+ <div class="layer fn-hide" id="layer_req" >
+    <h3>取消推荐<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="set-list-ul">
+        	<a href="javascript:void(0)"><img src="" ></a>
+            <div class="set-list-ul-r">
+            	<div class="set-list-title"></div>
+                <div><span class="col99 mr30"></span><span class="col99"></span></div>
+                <div><span class=" redfw mr30"></span><div class="fn-hide"><span id="repv"></span></div></div>
+            </div>
+            </div>
+            <div class="clear"></div> 
+            <div class="de-tx">推荐车源展示优先于普通车源,并且会在您的店铺首页特别推荐展示最新推荐的三辆车源
+        </div>        
+        <div class="clear"></div>        
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" a_id="recommend" class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+<!--弹窗end-->
+
+
+<script type="text/javascript" src="/public/js/seajs/sea.js"></script>
+<script type="text/javascript" >
+	var dealerId= 1;
+
+    var rowNum = "{$count}";
+    var curIndex = 0;
+    var pageSize = 5;
+    var infoId = 0, timer = null, islist = true,rtime=1;
+    var bid = 0, sid = 0, specid = 0, saleid = 0, key = "", order = 0, overtime = 0;
+    var discountp = 0;
+    var status = {$map.status};
+    var carInfo = 0;
+    var radioId = 0;
+    var curOrder = Cmd.GetUrlParam('order');
+    if (parseInt(curOrder) == 2) {
+        order = 2;
+    }
+    if (parseInt(rowNum) == 0) {
+        $("#divProduct").attr("data-toggle", "");
+        $("#divLinkMan").attr("data-toggle", "");
+        $("#divOverTimeType").attr("data-toggle", "");
+    }
+    if (status == 5) {
+        $(".sold-ul").css("display", "");
+    }
+    if (status == 4) {
+        $("#lilayer_os1").css("display", "none");
+        $("#divOverTimeType").css("display", "");
+        $("#spanOverTimeType").css("display", "");
+    }
+
+    /*弹框*/
+    seajs.config({ version: "1392621587520" });
+    
+    seajs.use(["jquery", "select", "layer", "gotop"], function ($) {
+        $('#gotop').on('show', function () {
+
+        });
+
+    });
+</script>
+<script type="text/javascript">    
+
+    $(document).ready(function () {
+        if (curIndex > rowNum)
+            $("#divFooter").css("display", "");
+        else {
+            $("#divFooter").css("display", "none");
+        }       
+
+    });  
+
+    seajs.use(["jquery", "select", "layer", "support"], function ($) {
+        $("#layer_os .result").find("li").on('click',"",function () {
+            $("#layer_os .result li").each(function () {
+                $(this).removeClass("current");
+            });
+            $(this).attr("class", "current");
+
+            if ($(this).find("span").eq(0).text() == "下架") {
+                var li = $("#layer_os .sold-out li");
+                li.eq(3).css("display", "none");
+                li.eq(4).css("display", "none");
+                li.eq(5).css("display", "none");
+            }
+            else {
+                $("#layer_os .sold-out li").each(function () {
+                    $(this).css("display", "");
+                });
+            }
+        });
+        $("#layer_os input").on('focus', "", function () {            
+            var liid = $(this).attr("li_id");
+            $(liid).find(".wrongred").text("");
+        });
+        $("#layer_u input").on('focus', "", function () {
+            var liid = $(this).attr("li_id");
+            $("#layer_u").find(".wrongred").text("");
+        });
+        $("#layer_a input").on('focus', "", function () {
+            $("#layer_a").find(".wrongred").text("");
+        });
+        $(".lable-box input").on("click", "", function () {
+            ChangeRecommendRadion();
+        });
+        $("#layer_os input").on('blur', "", function () {
+            var liid = $(this).attr("li_id");
+            switch (liid)
+            {
+                case "#lilayer_os2":
+                    var price = $("#txtSellPrice").val();
+                    if (price == "") {
+                        $(liid).find(".wrongred").text("请填写售价");
+                        return false;
+                    }
+                    else {
+                        if (!(/^(\d{1,3})(\.\d{1,2})?$/).test(price)) {
+                            $(liid).find(".wrongred").text("最多三位整数、两位小数");
+                            return false;
+                        }
+                    }
+                    break;
+                case "#lilayer_os3":
+                    var txtBuyName = $("#txtBuyName").val();
+                    if (txtBuyName != "") {
+                        if (!(/^[\u4e00-\u9fa5]+$/).test(txtBuyName)) {
+                            $(liid).find(".wrongred").text("最多四个汉字");
+                            return false;
+                        }
+                    }
+                    break;
+                case "#lilayer_os4":
+                    var txtBuyMobile = $("#txtBuyMobile").val();
+                    if (txtBuyMobile != "") {
+                        if (!(/^(\d{11})$/).test(txtBuyMobile)) {
+                            $(liid).find(".wrongred").text("最多11位数字/请填写手机号");
+                            return false;
+                        }
+                    }
+                    break;
+            }
+        });
+        $('.manage-list-ul').on('click', '.btn-red', function () {
+            infoId = $(this).attr('value');
+            var li = $("#li" + infoId);
+            var obj = $($(this).attr('data-target'));
+            var layer = $(this).attr('data-target');
+            var price = li.find(".car-list-one div:eq(0)").text().split('：')[1];
+            var milage = li.find(".car-list-one div:eq(1)").text().split('：')[1];
+            var regdate = li.find(".car-list-two div:eq(0)").text().split('：')[1];
+            var img = li.find("img:eq(0)").attr("src");
+            var name = li.find(".car-s-name a:eq(0)").text();
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(2)").text(regdate+"上牌");
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(0)").text(price);
+            var arr=getpriceoption(price.split('万')[0]*10000);
+             var html = "";
+            // html += "<dd><b></b><a data-key=\"0\" href=\"javascript:void(0);\">请选择价格</a></dd>";
+            $.each(arr, function (i, item) {
+                html += "<dd><b></b><a data-key=\"" + item + "\" href=\"javascript:void(0);\">" + item + "</a></dd>";
+            });
+            $("#selprice1 div:eq(1)").html("<dl>" + html + "</dl>");
+            $("#selprice1 div:eq(0)").find("span").text("请选择价格");
+            $("#selprice1 div:eq(1)").find("a").bind('click', ChangLinkPrice);
+            //$("#layer_dc .layer-bottom a:eq(0)").bind('click',createDiscount);
+            GetVinCode(infoId);
+            $("#dprice").html("暂无");
+            $($(this).attr('data-target')).layer('show');
+        });
+
+
+        $('.manage-list-ul').on('click', '.btn-blue', function () {
+
+            infoId = $(this).attr('value');
+            var li = $("#li" + infoId);
+            var obj = $($(this).attr('data-target'));
+            var layer = $(this).attr('data-target');
+            var price = li.find(".car-list-one div:eq(0)").text().split('：')[1];
+            var milage = li.find(".car-list-one div:eq(1)").text().split('：')[1];
+            var regdate = li.find(".car-list-two div:eq(0)").text().split('：')[1];
+            var img = li.find("img:eq(0)").attr("src");
+            var name = li.find(".car-s-name a:eq(0)").text();
+            if (layer == "#layer_a") {
+                showlayer_a(li, obj, price, milage, regdate, img, name);
+            }else {
+                if (layer == "#layer_os") {
+                    showlayer_os(li, obj, price, milage, regdate, img, name);
+                }
+                else {
+                    if ($(this).attr('data-target') == "#layer_u") {
+                        obj.find("img:eq(0)").attr("src", img);
+                        obj.find(".set-list-title").text(name);
+                        obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+                        obj.find(".set-list-ul-r span:eq(1)").text(milage);
+                        obj.find(".set-list-ul-r span:eq(2)").text(price);
+                        obj.find(".wrongred").eq(0).text("");
+                        $("#txtNewPrice").val(price.split("万")[0]);
+                        var html = li.find(".car-list-two div:eq(1)").text();
+                        obj.find(".col66").text(html)
+                        obj.find(".remove a:eq(0)").attr("href", "/usedcar/edit/?id=" + infoId + "&status=" + status + "");
+                    }else {
+                        if (layer == "#layer_re") {
+                            rtime = 1;
+                            $("#layer_re .btn-blue").bind('click', RecommendClk);
+                            showlayer_re(li, obj, price, milage, regdate, img, name);
+                        }else if (layer == "#layer_req"){
+							$("#layer_req .btn-blue").bind('click', RecommendUnClk);
+							showlayer_req(li, obj, price, milage, regdate, img, name);
+						}else{
+							if(layer == "#layer_aq"){
+								showlayer_aq(li, obj, price, milage, regdate, img, name);
+							}else{
+								obj.find("img:eq(0)").attr("src", img);
+								obj.find(".set-list-title").text(name);
+								obj.find(".p-span").eq(0).text(regdate)
+								obj.find(".p-span").eq(1).text(milage)
+								obj.find(".redfw").text(price)
+								obj.find(".wrongred").eq(0).text("");
+								if (status && parseInt(status) > 1) {
+									var html = li.find(".car-list-two div:eq(1)").text();
+									obj.find(".col66").text(html)
+								}
+								else {
+									var html = li.find(".car-list-three div:eq(0)").text();
+									obj.find(".col66").text(html)
+								}
+							}
+                        }
+                    }
+                }
+            }
+            $($(this).attr('data-target')).layer('show');
+
+        }); 
+       var getpriceoption=function(price){
+           var arr=[];
+            if (price >= 30000 && price < 50000){
+                 arr=[3000,4000,5000];
+             }
+            else if (price >= 50000 && price < 100000){
+                 arr=[5000,8000,10000];
+             }
+            else if (price >= 100000 && price < 150000){
+                 arr=[10000,12000,15000];
+             }
+            else if (price >= 150000 && price < 200000){
+                 arr=[15000,17000,20000];
+             }
+            else if (price >= 200000 && price < 250000){
+                 arr=[20000,22000,25000];
+             }
+            else if (price >= 250000){
+                 arr=[25000,27000,30000];
+             }
+            return arr;
+          }
+
+        var ChangLinkPrice = function () {
+            var price=$("#layer_dc .set-list-ul-r span:eq(0)").text().split('万')[0];
+            var p = $(this).attr("data-key");
+            discountp = p;
+            $("#selprice1 div:eq(0)").find("span").text($(this).text());
+            $("#selprice1").removeClass("active");
+            $("#selprice1 div:eq(1)").css("display", "none");
+            var dp=(price*10000-p)/10000;
+            $("#dprice").html(dp.toFixed(2) + "万元");
+            $("#layer_dc").find(".wrongred").text("");
+             };
+            var GetVinCode=function(){
+                 var data = "dealerid=" + dealerId + "&action=detail&infoid=" + infoId;  
+                $.get("/Handler/DiscountCar/DiscountChange.ashx", data, function (ret) {
+                if (ret != null && ret != "") {
+                    var arrRet = ret.split('#$#');
+                    carInfo=arrRet[1];
+                    $("#layer_dc .set-list-ul-r div:eq(2)").find("span").text("VIN码："+arrRet[0]);
+                   }
+                })
+            }
+            $("#layer_dc .btn-blue").on('click', function () {
+                //var p = $("#dprice").text().split('万')[0];
+                if (discountp == 0) {
+                    $("#layer_dc").find(".wrongred").text("请选择优惠金额");
+                    return false;
+                }
+                var data = "dealerid=" + dealerId + "&action=create&infoid=" + infoId + "&carprice=" + discountp + "&carinfo=" + carInfo;
+                $.get("/Handler/DiscountCar/DiscountChange.ashx", data, function (ret) {
+                    if (ret == "1") {
+                        $("#layer_dc").layer('hide');
+                        $("#li" + infoId).css("display", "none");
+                        infoId = 0;
+                        rowNum--;
+                        $(".fontb").text(rowNum);
+                        curIndex--;
+                    }
+                });
+            });
+           
+            var RecommendClk = function () {
+                if (rtime == 0) return false;
+                rtime = 0;
+                $('#layer_re .btn-blue').unbind('click');
+                var data = "action=create&infoid=" + infoId;
+                $.get("/usedcar/RecommendCarOperate/", data, function (ret) {
+                    if (ret == "1") {
+                        $("#reli" + infoId).text("取消推荐").attr('data-target', '#layer_req');
+                        var snum = Number($(".colf9").text());
+                        if (snum >= 1) {
+                            $(".colf9").text(snum - 1);
+                        }
+                        else {
+                            $(".colf9").text(0);
+                        }
+                    }
+                    else {
+                        alert('设置失败,请重试');
+                    }
+                    $("#layer_re").layer('hide');
+                    $("#layer_re .btn-blue").bind('click', RecommendUnClk);
+					location.reload();
+                });
+            }
+			
+			
+            var RecommendUnClk = function () {
+                if (rtime == 0) return false;
+                rtime = 0;
+                $('#layer_req .btn-blue').unbind('click');
+                var data = "action=down&infoid=" + infoId;
+                $.get("/usedcar/RecommendCarOperate/", data, function (ret) {
+                    if (ret == "1") {
+                        $("#reli" + infoId).text("设置推荐").attr('data-target', '#layer_re');
+                        var snum = Number($(".colf9").text());
+                        if (snum >= 1) {
+                            $(".colf9").text(snum - 1);
+                        }
+                        else {
+                            $(".colf9").text(0);
+                        }
+                    }
+                    else {
+                        alert('设置失败,请重试');
+                    }
+                    $("#layer_req").layer('hide');
+                    $("#layer_req .btn-blue").bind('click', RecommendClk);
+					
+					location.reload();
+                });
+            }
+			
+            var ChangeRecommendRadion = function () {
+                radioId = $('input[name="reradio"]:checked').val();
+            }
+        var showlayer_os = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+            obj.find("#txtSellPrice").val("");
+            obj.find(".wrongred").eq(0).text("");
+            obj.find(".result li:eq(0)").removeClass();
+            obj.find(".result li:eq(1)").attr("class", "current");
+            $("#layer_os .sold-out li").each(function () {
+                if ($(this).attr("id") != "lilayer_os1") {
+                    $(this).css("display", "");
+                }
+            });
+        }
+
+        var showlayer_a = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+            //obj.find(".input1").val(price.split('万')[0]);
+			obj.find(".input1").val('');
+            obj.find(".wrongred").eq(0).text("");
+            var d = new Date(new Date() - 0 + 60 * 86400000);
+            
+            obj.find(".sold-out span:eq(4)").text(d.getFullYear());
+            obj.find(".sold-out span:eq(5)").text(d.getMonth()+1);
+            obj.find(".sold-out span:eq(6)").text(d.getDate());
+        }
+		
+        var showlayer_aq = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+            //obj.find(".input1").val(price.split('万')[0]);
+			obj.find(".input1").val('');
+            obj.find(".wrongred").eq(0).text("");
+            var d = new Date(new Date() - 0 + 60 * 86400000);
+            
+            obj.find(".sold-out span:eq(4)").text(d.getFullYear());
+            obj.find(".sold-out span:eq(5)").text(d.getMonth()+1);
+            obj.find(".sold-out span:eq(6)").text(d.getDate());
+        }
+		
+        var showlayer_aq = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+            //obj.find(".input1").val(price.split('万')[0]);
+			obj.find(".input1").val('');
+            obj.find(".wrongred").eq(0).text("");
+            var d = new Date(new Date() - 0 + 60 * 86400000);
+            
+            obj.find(".sold-out span:eq(4)").text(d.getFullYear());
+            obj.find(".sold-out span:eq(5)").text(d.getMonth()+1);
+            obj.find(".sold-out span:eq(6)").text(d.getDate());
+        }
+		
+        var showlayer_re = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+        }
+        var showlayer_req = function (li, obj, price, milage, regdate, img, name) {
+            obj.find("img:eq(0)").attr("src", img);
+            obj.find(".set-list-title").text(name);
+            obj.find(".set-list-ul-r span:eq(0)").text(regdate);
+            obj.find(".set-list-ul-r span:eq(1)").text(milage);
+            obj.find(".set-list-ul-r span:eq(2)").text(price);
+            obj.find(".set-list-ul-r span:eq(3)").text(li.find(".car-list-three div:eq(0)").text());
+        }
+        $(".layer .btn-blue").on('click', function () {
+            CarOperate($(this).attr('a_id'), $(this).closest('.layer').get(0).id);
+        });    
+
+        function CarOperate(action, layerid) {
+            if (infoId == 0){
+                return false;
+            }
+            var newPrice = "";
+            if (action == "update") {
+                newPrice = $("#txtNewPrice").val();
+                if (newPrice == "") {
+                    $("#layer_u").find(".wrongred").text("请填写售价");
+                    return false;
+                }
+                else {
+                    if (!(/^(\d{1,3})(\.\d{1,2})?$/).test(newPrice)) {
+                        $("#layer_u").find(".wrongred").text("最多三位整数、两位小数");
+                        return false;
+                    }
+                }
+            }
+            if (action == "setsell")
+            {
+                newPrice = $("#txtPrice").val();
+                if (newPrice == "") {
+                    $("#layer_a").find(".wrongred").text("请填写售价");
+                    return false;
+                }
+                else {
+                    if (!(/^(\d{1,3})(\.\d{1,2})?$/).test(newPrice)) {
+                        $("#layer_a").find(".wrongred").text("最多三位整数、两位小数");
+                        return false;
+                    }
+                }
+            }
+            var txtBuyName = "";
+            var txtBuyMobile = "";
+            if (action == "updatestatus")
+            {
+                var s = $("#layer_os .result li:eq(0)").attr("class");
+                if (s == "current") {
+                    action = "overtime";
+                }
+                else {
+                    action = "setselled";
+                    newPrice = $("#txtSellPrice").val();
+                    if (newPrice == "") {
+                        $("#lilayer_os2").find(".wrongred").text("请填写售价");
+                        return false;
+                    }
+                    else {
+                        if (!(/^(\d{1,3})(\.\d{1,2})?$/).test(newPrice)) {
+                            $("#lilayer_os2").find(".wrongred").text("最多三位整数、两位小数");
+                            return false;
+                        }
+                    }
+                    txtBuyName = $("#txtBuyName").val();
+                    if (txtBuyName != "") {
+                        if (!(/^[\u4e00-\u9fa5]+$/).test(txtBuyName)) {
+                            $("#lilayer_os3").find(".wrongred").text("最多四个汉字");
+                            return false;
+                        }
+                    }
+                    txtBuyMobile = $("#txtBuyMobile").val();
+                    if (txtBuyMobile != "") {
+                        if (!(/^(\d{11})$/).test(txtBuyMobile)) {
+                            $(liid).find(".wrongred").text("最多11位数字/请填写手机号");
+                            return false;
+                        }
+                    }
+                }
+            }
+            var data = "action=" + action + "&status=" + status + "&infoid=" + infoId + "&price=" + newPrice + "&buyname=" + txtBuyName + "&buyMobile=" + txtBuyMobile;
+            //var data = action;
+			$.get("{:U('usedcar/caroperate')}", data, function (ret) {
+                if (ret == 1) {
+                    $("#" + layerid).layer('hide');
+                    if (action == "setsell") {
+                        $(".time em")[0].className = "";
+                        order = 2;
+                        curIndex = 1;
+                        if (rowNum > 0) {
+							$("#li" + infoId).css("display", "none");
+                        }
+                    }
+                    else {                        
+                        $("#li" + infoId).css("display", "none");
+                        infoId = 0;
+                        rowNum--;
+                        $(".fontb").text(rowNum);
+                        curIndex--;
+                    }
+                }
+            });
+        }
+
+    });
+</script>
+
+
+
+
+</body>
+</html>

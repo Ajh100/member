@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统通知</title>
+<link rel="shortcut icon" href="/public/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+<include file="Public:header" />
+    <!--头部end-->
+<!--注解star-->
+<div class="note">
+  <div class="note-return">
+  <a href="/">
+    <i class="icon"></i>
+    返回首页
+    </a> </div>
+  <div class="note-list-tab">
+  	<div class="note-list-tab-nav">
+		<ul>
+			<li <eq name="map.status" value="1">class="current"</eq>><a href="/usedcar/?status=1">在售车源</a></li>
+			<li <eq name="map.status" value="2">class="current"</eq>><a href="/usedcar/?status=2">平行进口车</a></li>
+			<li <eq name="map.status" value="3">class="current"</eq>><a href="/usedcar/?status=3">下架车源</a></li>
+			<li <eq name="map.status" value="4">class="current"</eq>><a href="/usedcar/?status=4">已售</a></li>
+                        <li><a href="/saleman/">员工管理</a></li>
+                        <li class="current"><a href="/notice/">系统通知</a></li> 
+                        <li><a href="/store/password/">修改密码</a></li><li>
+                        <li><a href="/store/">公司信息</a></li>
+		</ul>
+    </div>
+  </div>
+</div>
+
+<!--注解end-->
+<!--列表菜单star-->
+<div class="manage-sect system-mes-title" id="typeBtn">通知类型：
+<a href="/notice/" <eq name="Think.get.cid" value="">class="current"</eq>>全部通知</a>
+	<volist name="classlist" id="vo">
+	<a <eq name="Think.get.cid" value="$vo.id">class="current"</eq> href="/notice/?cid={$vo.id}">{$vo.title}</a>
+	</volist>
+</div>
+<!--列表菜单end-->
+<div class="content">
+  	<div class="manage-list">
+    	<h3 class="title"></h3>
+        
+        <ul class="manage-list-ul system-mes-ul" id="noticeUl">
+			<volist name="list" id="vo">
+        	<li>
+			<div class="title"><span class="fr">{$vo.addtime|date="Y-m-d",###}</span><span class="icon-plaint"></span>{$vo.classtitle}</div>
+			<div class="mes-tx">{$vo.content}</div>
+			</li>
+			</volist>
+		</ul>
+        
+    </div>
+</div>
+<include file="Public:footer" />
+</body>
+</html>

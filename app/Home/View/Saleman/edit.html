@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商家平台_销售代表管理</title>
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery/jquery.form.js"></script>
+</head>
+<body>
+    
+<include file="Public:header" />
+    
+<!--注解star-->
+<div class="note">
+  <div class="note-return"><a href="/"><i class="icon"></i></a></div>
+  <div class="note-list-tab">
+  	<div class="note-list-tab-nav">
+		<ul>
+			<li <eq name="map.status" value="1">class="current"</eq>><a href="/usedcar/?status=1">在售车源</a></li>
+			<li <eq name="map.status" value="2">class="current"</eq>><a href="/usedcar/?status=2">平行进口车</a></li>
+			<li <eq name="map.status" value="3">class="current"</eq>><a href="/usedcar/?status=3">下架车源</a></li>
+			<li <eq name="map.status" value="4">class="current"</eq>><a href="/usedcar/?status=4">已售</a></li>
+                        <li class="current"><a href="/saleman/">员工管理</a></li>
+                        <li><a href="/notice/">系统通知</a></li> 
+                        <li><a href="/store/password/">修改密码</a></li><li>
+                        <li><a href="/store/">公司信息</a></li>
+		</ul>
+    </div>
+  </div>
+</div>
+
+<!--注解end-->
+<form id="form1" method="post">
+<input type="hidden" value="{$data.id}" name="txtId" id="txtId" />
+<div class="content overflow">
+    <div class="website-signin website-add" style="position:relative">
+        <ul>
+          <li> <span class="web-add-l"><span class="star">*</span>姓名：</span>
+            <div class="web-add-r">
+              <input id="txtName" name="txtName" type="text" class="add-input" value="{$data.nickname}" onblur="checkName();" />
+              <div><span class="twrong" style="display:none" id="wrongName"></span></div>
+            </div>
+          </li>
+          
+          <li> <span class="web-add-l"><span class="star">*</span>手机：</span>
+            <div class="web-add-r">
+              <input id="txtPhone" name="txtPhone" type="text" class="add-input" value="{$data.telphone}" onblur="checkMobile();" />
+              <div><span class="twrong" style="display:none" id="wrongPhone"></span></div>
+            </div>
+          </li>
+          <li> <span class="web-add-l">QQ：</span>
+            <div class="web-add-r">
+              <input id="txtQQ" name="txtQQ" type="text" class="add-input" value="{$data.qq}" onblur="checkQQ();" />
+              <div><span class="twrong" style="display:none" id="wrongQQ"></span></div>
+            </div>
+          </li>
+          <li> <span class="web-add-l">微信：</span>
+            <div class="web-add-r">
+              <input id="txtWeixin" name="txtWeixin" type="text" class="add-input" value="{$data.weixin}" onblur="checkWeixin();" maxlength="20" />
+              <div><span class="twrong" style="display:none" id="wrongWeixin"></span></div>
+            </div>
+          </li>
+          <li> <span class="web-add-l"><span class="star">*</span>所属职务：</span>
+            <div class="web-add-r">
+                  <ul class="result" id="ulJob">
+                  	  <volist name="postion" id="vo">
+                      	<li <eq name="vo.id" value="$data.posid">class="current"</eq> rel="{$vo.id}"><i></i><a href="javascript:void(0);">{$vo.title}</a></li>
+                      </volist>
+					  <input value="{$data.posid}" type="hidden" name="txtZhiwei" id="txtZhiwei" />
+                    </ul>
+                    <span class="twrong" style="display:none" id="wrongZhiwei"></span>
+                </div>
+          </li>
+          <li> <span class="web-add-l">备注：</span>
+            <div class="web-add-r">
+					<textarea class="add-input" name="txtRemark" style="height:60px;" onfocus="checkRemark();" id="txtRemark">{$data.remark}</textarea>
+                    <span class="twrong" style="display:none" id="wrongRemark"></span>
+            </div>
+          </li>
+        </ul>
+		<div style="" id="upload-user-pic">
+              	<span class="web-add-l"><span class="star">*</span>头像 - 请上传真实照片</span>
+                <div class="web-add-r" style="position:relative;">
+                    <div id="imgBigDiv_1" class="fn-left" style="width:158px;height:160px;border:1px solid #999;">
+                    	<img src="{$Think.config.WEB_IMG_URL}{$data.face}" />
+                    </div>
+                    <a href="javascript:void(0);" class="upbtn">选择照片</a>
+					<input class="upinput" type="file" id="FileUpload" name="FileUpload"  onchange="Upload('{:U('saleman/ajaxupload')}', 'txtFace');" />
+					<input type="hidden" id="txtFace" name="txtFace" value="{$data.face}" />
+            	</div>
+        </div>
+        <div class="website-list"><div class="save-btn">
+        <a href="javascript:void(0);" class="btn btn-org" onclick="saveInfo();">保存</a>
+        </div></div>
+        <div style="display:none">
+            <input type="text" id="txtJob" name="txtJob" value="" />
+            <input type="text" value="" id="hidImage1" name="hid" />
+        </div>
+  </div>
+</div>
+</form>
+<include file="Public:footer" />
+</body>
+</html>
+<script type="text/javascript">
+
+    //职务的点击事件
+    $("#ulJob li[class!='noclick']").bind('click', function(){
+        var lis = $(this).parent().find("li");
+        var index = 0;
+        var uname = $(this).find("a").text();
+        for (var i = 0; i < lis.length; i++) {
+            if ($(lis[i]).hasClass("current")) {
+                $(lis[i]).removeClass("current");
+                index = i;
+            }
+        }
+        $(this).addClass("current");
+		$('#txtZhiwei').val($(this).attr('rel'));
+    });
+	
+
+    //验证姓名
+    function checkName() {
+        var name = $('#txtName').val();
+        var UserNameEx = /^[\u4e00-\u9fa5]{2,4}$/;
+        if (name == "" || !UserNameEx.test(name)) {
+            SetSpanWrongTip("wrongName", "请输入2~4个汉字");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongName");
+            return true;
+        }
+    }
+	
+
+
+    //验证联系电话
+    function checkMobile() {
+        var phone = $('#txtPhone').val();
+        var PhoneEx = /13[0-9]{9}$|^14[0-9]{9}$|^15[0-9]{9}$|^18[0-9]{9}$|^17[0-9]{9}$|^400[0-9]{7}-?([1-9]{1}[0-9]{0,4})?$/;
+        if (phone == "" || !PhoneEx.test(phone)) {
+            SetSpanWrongTip("txtPhone", "请输入正确的电话");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongPhone");
+            return true;
+        }
+    }
+
+    //验证QQ
+    function checkQQ() {
+        var qq = $('#txtQQ').val();
+        var QQEx = /^[0-9]{5,11}$/;
+        if (qq != "" && !QQEx.test(qq)) {
+            SetSpanWrongTip("wrongQQ", "请输入正确QQ号码");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongQQ");
+            return true;
+        }
+    }
+
+    //验证微信
+    function checkWeixin() {
+        var wx = $('#txtWeixin').val();
+        if (escape(wx).indexOf("%u") > -1) {
+            //含有汉字 
+            SetSpanWrongTip("wrongWeixin", "微信中不能含有中文字符");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongWeixin");
+            return true;
+        }
+    }
+
+
+    //验证所属职位
+    function checkJob() {
+        var job = $("#txtZhiwei").val();
+        if (job == "") {
+            SetSpanWrongTip("wrongZhiwei", "请选择所属职务");
+            return false;
+        }
+        else {
+            SetSpanRightTip("wrongZhiwei");
+            return true;
+        }
+    }
+	
+	//验证头像
+	function checkFace(){
+		var face = $('#txtFace').val();
+		if(face == ""){
+			alert('请上传头像');
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	//验证备注
+	function checkRemark(){
+		var remark = $('#txtRemark');
+		if(remark.length > 50){
+            SetSpanWrongTip("wrongRemark", "备注最多50个字符");
+            return false;
+		}else{
+            SetSpanRightTip("wrongRemark");
+            return true;
+		}
+	}
+
+    //设置错误提示
+    function SetSpanWrongTip(span, msg) {
+        $("#" + span).html(msg);
+        $("#" + span).removeAttr("style");
+    }
+    //设置正确提示
+    function SetSpanRightTip(span) {
+        $("#" + span).attr("style", "display:none");
+    }
+
+	
+	//文件头像
+	function Upload(sendUrl, repath) {
+		$("#form1").ajaxSubmit({
+			beforeSubmit: function(formData, jqForm, options){
+				$("#imgBigDiv_1").text("loading");				
+			},
+			success: function(data, textStatus){
+				if (data.msg == 1) {
+					$('#'+repath).val(data.msgbox);
+					$("#imgBigDiv_1").text('');
+					$("#imgBigDiv_1").find('img').remove();
+					$("#imgBigDiv_1").append('<img src="{$Think.config.WEB_IMG_URL}'+ data.msgbox +'" />');
+				} else {
+					alert(data.msgbox);
+				}
+			},
+			error: function(data, status, e) {
+				$("#imgBigDiv_1").text("上传失败");	
+				alert("上传失败，错误信息：" + e);
+			},
+			url: sendUrl,
+			dataType: "json",
+			type: "post",
+			timeout: 600000
+		});
+	}
+	
+    //保存信息
+    function saveInfo() {
+        if (checkName() && checkQQ() && checkWeixin() && checkJob() && checkFace() && checkRemark()) {
+			var sendData = {
+				'txtId' : $('#txtId').val(),
+				'txtName' : $('#txtName').val(),
+				'txtPhone' : $('#txtPhone').val(),
+				'txtQQ' : $('#txtQQ').val(),
+				'txtWeixin' : $('#txtWeixin').val(),
+				'txtZhiwei' : $('#txtZhiwei').val(),
+				'txtFace' : $('#txtFace').val(),
+				'txtRemark' : $('#txtRemark').val()
+			};
+            $.ajax({
+                type: 'POST',
+                url: '/saleman/edit/',
+                dataType: 'json',
+                data: sendData,
+				success: function (data) {
+                    if (data.val == 100) {
+                        alert(data.message);
+                        window.location.href = "/saleman/";
+                    }
+                    else {
+                        alert("保存失败：" + data.message);
+                    }
+                }
+            });
+        }
+    }
+
+</script>

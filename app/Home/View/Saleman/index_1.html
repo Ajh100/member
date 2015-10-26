@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>员工管理</title>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+<include file="Public:header" />
+    
+    
+<div class="note">
+  <div class="note-return"><a href="/"><i class="icon"></i></a></div>
+  <div class="note-list-tab">
+  	<div class="note-list-tab-nav">
+        <ul>
+           <li><a href="/store/">公司信息</a></li>
+           <li class="current"><a  href="/saleman/">员工管理</a></li>
+           <li><a href="#">店铺装修</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+<!--注解end-->
+<div class="content overflow">
+	<div class="sell-box divSales" id="divSales">
+   	  <h3>
+		  <span class="fr">
+			<a href="/saleman/add/?pos=1" class="btn btn-blue"><i class="sell-icon-add"></i>添加新员工</a>
+		  </span>
+		  <i class="sell-icon-ren"></i>销售代表
+	  </h3>
+      <ul class="sell-box-ul">
+		<volist name="list" id="vo">
+		  <eq name="vo.posid" value="1">
+		  <li>
+			  <div class="pic-list">
+				  <a href="#"><img src="{$Think.config.WEB_IMG_URL}{$vo.face}" ></a>
+				  <div class=" sell-tx">
+					  <p>{$vo.position}：{$vo.nickname}</p>
+					  <p>电&nbsp;&nbsp;&nbsp;&nbsp;话：{$vo.telphone}</p>
+					  <p>QQ&nbsp;号&nbsp;码：{$vo.qq}</p>
+					  <p>车源：{$vo.id|get_user_carcount}</p>
+					  <p>
+						  <a href="/saleman/edit/?id={$vo.id}" class="btn btn-blue mr10">修改</a>
+						  <a href="javascript:void(0);" class="btn btn-org" carnum="{$vo.id|get_user_carcount}" val_id="{$vo.id}"  val_name="{$vo.nickname}" data-target="#layer_ds" >删除</a>
+					  </p>
+				  </div>
+			  </div>
+		  </li>
+		  </eq>
+		</volist>
+	  </ul>
+    </div>
+    <div class="sell-box divSales" id="divAppraiser">
+   	  <h3>
+	  <span class="fr">
+	  <a href="/saleman/add/?pos=2" class="btn btn-blue"><i class="sell-icon-add"></i>添加新员工</a>
+	  </span>
+	  <i class="sell-icon-ren"></i>评估师
+	  </h3>
+      <ul class="sell-box-ul">
+		<volist name="list" id="vo">
+		  <eq name="vo.posid" value="2">
+		  <li>
+			  <div class="pic-list">
+				  <a href="#"><img src="{$Think.config.WEB_IMG_URL}{$vo.face}" ></a>
+				  <div class=" sell-tx">
+					  <p>{$vo.position}：{$vo.nickname}</p>
+					  <p>电&nbsp;&nbsp;&nbsp;&nbsp;话：{$vo.telphone}</p>
+					  <p>QQ&nbsp;号&nbsp;码：{$vo.qq}</p>
+					  <p>车源：{$vo.id|get_user_carcount}</p>
+					  <p>
+						  <a href="/saleman/edit/?id={$vo.id}" class="btn btn-blue mr10">修改</a>
+						  <a href="javascript:void(0);" class="btn btn-org" carnum="{$vo.id|get_user_carcount}" val_id="{$vo.id}"  val_name="{$vo.nickname}" data-target="#layer_ds" >删除</a>
+					  </p>
+				  </div>
+			  </div>
+		  </li>
+		  </eq>
+		</volist>
+	  </ul>
+    </div>
+    <div class="sell-box divSales" id="divAppraiser">
+   	  <h3>
+		  <span class="fr">
+		  <a href="/saleman/add/?pos=3" class="btn btn-blue"><i class="sell-icon-add"></i>添加新员工</a>
+		  </span>
+		  <i class="sell-icon-ren"></i>质检师
+	  </h3>
+      <ul class="sell-box-ul">
+		<volist name="list" id="vo">
+		  <eq name="vo.posid" value="3">
+		  <li>
+			  <div class="pic-list">
+				  <a href="#"><img src="{$Think.config.WEB_IMG_URL}{$vo.face}" ></a>
+				  <div class=" sell-tx">
+					  <p>{$vo.position}：{$vo.nickname}</p>
+					  <p>电&nbsp;&nbsp;&nbsp;&nbsp;话：{$vo.telphone}</p>
+					  <p>QQ&nbsp;号&nbsp;码：{$vo.qq}</p>
+					  <p>车源：{$vo.id|get_user_carcount}</p>
+					  <p>
+						  <a href="/saleman/edit/?id={$vo.id}" class="btn btn-blue mr10">修改</a>
+						  <a href="javascript:void(0);" class="btn btn-org" carnum="{$vo.id|get_user_carcount}" val_id="{$vo.id}"  val_name="{$vo.nickname}" data-target="#layer_ds" >删除</a>
+					  </p>
+				  </div>
+			  </div>
+		  </li>
+		  </eq>
+		</volist>
+	  </ul>
+    </div>
+	
+</div>
+
+
+
+<!--弹窗star-->
+<div class="layer deletel  fn-hide" id="layer_ds" >
+    <h3>删除销售代表<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<h4>销售代表：秋林</h4>
+        <div class="deletel-title">
+        	<div class="deletel-title-part1"><span class="red mr05">*</span>名下车源</div>
+            <div class="deletel-title-part2">255辆</div>
+            <div class="deletel-title-part3">转给</div>
+            <div class="deletel-title-part4">
+            <div class="select" id="selectSaleMan" val_id="0" data-toggle="select">
+               <div class="select-selected"><span>请选择</span><i class="icon10 icon10-down1"></i></div>
+                <div class="select-option">
+                      
+                   </div>
+               </div>
+   			</div>
+            <div class="delete-title-part5"><a val_id="0" href="javascript:void(0)">+分给多人</a></div>
+        </div>
+        <div class="dealing-list" style="display:none;">
+        	<div class="result  dealing-list-cont">
+            	
+            </div>
+        </div>
+        <div class="dealing" style="display:none;">
+        </div>
+        <div class="notice" style="display:none;"><span>请注意：系统对秋林名下所有车源进行自动分配，如需要人工分配请</span><a href="#" class="btn btn-blue">人工分配</a></div>
+        
+    </div>
+    <div class="layer-bottom"><a href="#" val_id="0"  class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+
+
+<div class="layer deletel fn-hide" id="layer_dn" >
+    <h3>删除销售代表<a class="layer-close" href="#" data-dismiss="layer"><i class="icon-close"></i></a></h3>
+    <div class="layer-content">
+    	<div class="add-delegate">
+			<span class="icon"></span>
+            <div class="icon-tx">您名下有车源，请先将车源转给其他销售代表</div>
+        </div>
+    </div>
+    <div class="layer-bottom"><a href="javascript:void(0)" class="btn btn-blue mr10">确认</a><a href="javascript:void(0)" data-dismiss="layer" class="btn btn-org">取消</a></div>
+</div>
+<!--弹窗end-->
+
+ 
+
+<script type="text/javascript" src="/public/js/seajs/sea.js"></script>
+<script type="text/javascript">
+    seajs.config({ version: "1392621587520" });
+    seajs.use(["jquery", "select", "layer"], function ($) {
+        $('.divSales').on('click', '.btn-org', function () {
+
+            var saleId = $(this).attr('val_id');
+            var saleName = $(this).attr('val_Name');
+            var carNum = $(this).attr('carnum');
+            var layer = $(this).attr('data-target');
+
+            if (layer == "#layer_ds") {
+                ShowLayer_ds(saleId, carNum,saleName);
+            }
+            else {
+                ShowLayer_dn(saleId, carNum);
+            }
+        });
+
+        var ShowLayer_dn = function (saleId, carNum)
+        {
+            $.get("/Handler/SaleMan/GetAllSaleMan.ashx", "", function (ret) {
+                if (ret != null && ret != "") {
+                    if (ret.returncode == 1) {
+                        var obj = $("#layer_dn .layer-bottom a:eq(0)");
+                        var data = ret.result.length;
+                        if (data == 1) {
+                            $("#layer_dn .icon-tx").eq(0).text("您名下有车源，请先将车源转给其他销售代表");
+                            obj.text("添加销售");
+                            obj.attr("href", "/saleman/add/?type=1");                            
+                        }
+                        else {
+                            obj.text("确认");
+                            $("#layer_dn .icon-tx").eq(0).text("您确认要删除当前销售代表？");
+                            $("#layer_dn .layer-bottom a:eq(0)").bind('click', function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Handler/SaleMan/DeleteSaleMan.ashx',
+                                    dataType: 'json',
+                                    data: 'action=deleteSale&type=1&saleId=' + saleId,
+                                    success: function (data) {
+                                        if (data.val == 100) {
+                                            $("#layer_dn").layer('hide');
+                                            window.location.href = window.location.href;
+                                        }
+                                        else {
+                                            alert("删除失败：" + data.message);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                        $("#layer_dn").layer('show');
+                    }
+                }
+            }, 'json');
+        }
+
+        
+
+        var ShowLayer_ds = function (saleId, carNum,saleName) {
+
+            var select = $("#layer_ds .select-option").eq(0);
+
+            LoadSelectSaleMan(select, saleId);
+            
+            $("#layer_ds .layer-content h4:eq(0)").text("销售代表：" + saleName);
+            $("#layer_ds .deletel-title-part2").html(carNum + "辆");
+            $("#layer_ds .delete-title-part5 a:eq(0)").text("+分给多人");
+            $("#layer_ds .delete-title-part5 a:eq(0)").attr("val_id", saleId);
+            $("#layer_ds .dealing").html("");
+            $("#layer_ds .dealing").eq(0).css("display", "none");
+            $("#layer_ds .dealing-list").eq(0).css("display", "none");
+            $("#layer_ds .notice").eq(0).css("display", "none");
+            $("#layer_ds").layer('show');
+        };
+       
+        var LoadSaleManCarList = function () {
+            var saleId = $("#layer_ds .delete-title-part5 a:eq(0)").attr("val_id");
+            $.get("/saleman/loadsalemancar/", "saleid=" + saleId, function (ret) {
+                if (ret != null && ret != "") {
+                        var data = ret;
+                        var html = "";
+                        var option = $("#selectSaleMan .select-option").html();
+                        var id = $("#selectSaleMan").attr("val_id");
+                        var name = $("#selectSaleMan span:eq(0)").text();
+                        $.each(data, function (i, item) {
+                            html += "<li val_id=\"" + item.id + "\">";
+                            html += "<div class=\"dealing-part dealing-part1\"><div class=\"part-name\">" + item.title + "</div><div class=\"part-name-list\"><span class=\"mr30\">" + item.price + "万元</span><span>" + item.mileage + "万公里</span></div></div>";
+                            html += "<div class=\"dealing-part dealing-part2\">转给</div>";
+                            html += " <div class=\"dealing-part dealing-part3\"><div class=\"select\" val_id=\"" + id + "\" data-toggle=\"select\">";
+                            html += " <div  class=\"select-selected\"><span>" + name + "</span><i class=\"icon10 icon10-down1\"></i></div>";
+                            html += "<div class=\"select-option\">" + option + "</div>";
+                            html += "</div></div></li>"
+                        });
+
+                        $("#layer_ds .dealing").html("<ul>" + html + "</ul>");
+                        $("#layer_ds .dealing .select").select();
+                        $("#layer_ds .dealing .select-option a").bind('click', SelectSaleCarMan);
+                        $("#layer_ds").layer("resize");
+                }
+            }, "json");
+        }
+
+        var LoadSelectSaleMan = function (obj,saleId){
+            $.get("/saleman/loadsaleman/", "", function (ret) {
+                if (ret != null && ret != "") {
+                        var data = ret;
+                        var html = "";
+                        var list = "";
+                        $.each(data, function (i, item) {
+                            if (item.id != saleId) {
+                                if (html == "") {
+                                    $("#selectSaleMan span:eq(0)").text(item.nickname);
+                                    $("#selectSaleMan").attr("val_id", item.id);
+                                    html += "<dd><b></b><a href=\"javascript:void(0)\" val_id=" + item.id + ">" + item.nickname + "</a></dd>";
+                                    list += "<li class=\"current\" val_id=" + item.id + "><i></i><a class=\"time\" href=\"javascript:void(0)\" >" + item.nickname + "</a></li>"
+                                }
+                                else {
+                                    html += "<dd><b></b><a href=\"#\" val_id=" + item.id + ">" + item.nickname + "</a></dd>";
+                                    list += "<li val_id=" + item.id + "><i></i><a href=\"javascript:void(0)\" >" + item.nickname + "</a></li>"
+                                }
+                            }
+                        });
+                        obj.html("<dl>" + html + "</dl>");
+                        $("#layer_ds .dealing-list-cont").eq(0).html("<ul>" + list + "</ul>");
+                        $("#layer_ds .dealing-list-cont li").bind('click', ClickSaleMan);
+                        obj.find("a").bind('click', SelectSaleMan);
+                }
+            }, "json");
+        }
+
+        var SelectSaleCarMan = function () {
+            var id = $(this).attr("val_id");
+            var name = $(this).text();
+            var obj = $(this).closest(".active");
+            obj.attr("val_id", id);
+            obj.find("span:eq(0)").text(name);
+            obj.removeClass("active");
+            obj.find(".select-option").css("display", "none");
+        }
+        var SelectSaleMan = function (){
+            var id = $(this).attr("val_id");
+            var name = $(this).text();            
+            $("#selectSaleMan span:eq(0)").text(name);
+            $("#selectSaleMan").removeClass("active");
+            $("#selectSaleMan").attr("val_id", id);
+            $("#selectSaleMan .select-option").eq(0).css("display", "none");
+            $("#layer_ds .dealing-list-cont li").each(function () {
+                $(this).removeClass();
+                $(this).find("a").removeClass();
+            });
+        }
+        var ClickSaleMan = function () {            
+            var css = $(this).attr("class");
+            if (css != "current") {
+                $(this).attr("class", "current");
+                $(this).find("a").attr("class", "time");
+            }
+            else {
+                $(this).removeClass();
+                $(this).find("a").removeClass();
+            }
+        }
+        $("#layer_ds .notice a:eq(0)").bind('click', function () {
+            var text = $(this).text();
+            if (text == "人工分配") {
+                $("#layer_ds .dealing-list").css("display", "none");
+                $("#layer_ds .dealing").css("display", "");
+
+                $("#layer_ds .notice span:eq(0)").text("请注意：如需要自动分配请");
+                $("#layer_ds .notice a:eq(0)").text("自动分配");
+                LoadSaleManCarList();
+            }
+            else {
+                $("#layer_ds .dealing-list").css("display", "");
+                $("#layer_ds .dealing").css("display", "none");
+
+                $("#layer_ds .notice span:eq(0)").text("请注意：系统对车源进行自动分配，如需要人工分配请");
+                $("#layer_ds .notice a:eq(0)").text("人工分配");
+            }
+        });
+
+        $("#layer_ds .delete-title-part5 a:eq(0)").bind('click', function () {
+            var text = $(this).text();
+            if (text == "+分给多人") {
+                $(this).text("+分给一人")
+                $("#selectSaleMan").removeClass("active");
+                $("#selectSaleMan").addClass("select-disabled")
+                $("#selectSaleMan .select-option").eq(0).css("display", "none");
+
+                $("#layer_ds .notice span:eq(0)").text("请注意：系统对车源进行自动分配，如需要人工分配请");
+                $("#layer_ds .notice a:eq(0)").text("人工分配");
+                $("#layer_ds .dealing-list").eq(0).css("display", "");
+                $("#layer_ds .notice").eq(0).css("display", "");
+                $("#layer_ds .dealing").css("display", "none");
+            }
+            else {
+                $(this).text("+分给多人");
+                $("#selectSaleMan").removeClass("select-disabled")
+                $("#layer_ds .dealing-list").eq(0).css("display", "none");
+                $("#layer_ds .notice").eq(0).css("display", "none");
+                $("#layer_ds .dealing").css("display", "none");
+            }
+        });
+
+        $("#layer_ds .layer-bottom a:eq(0)").bind('click', function () {
+            var text = $("#layer_ds .delete-title-part5 a:eq(0)").text();
+            var oldman = $("#layer_ds .delete-title-part5 a:eq(0)").attr("val_id");
+            var newman = 0;
+            var allnewman = "";
+            var carlist = "";
+            var type = 0;
+            if (text == "+分给多人") {
+                type = 1;
+                newman = $("#selectSaleMan").attr("val_id");
+            }
+            else {
+                text = $("#layer_ds .notice a:eq(0)").text();
+                if (text == "人工分配") {
+                    type = 2;
+                    $("#layer_ds .dealing-list li").each(function () {
+                        if ($(this).attr("class") == "current") {
+                            allnewman += $(this).attr("val_id") + ",";
+                        }
+                    });
+                    if (allnewman == "")
+                    {
+                        alert("请选择销售代表");
+                        return false;
+                    }
+                }
+                else {
+                    type = 3;
+                    $("#layer_ds .dealing li").each(function () {
+                        carlist += $(this).attr("val_id") + "|" + $(this).find(".dealing-part3 div:eq(0)").attr("val_id") + ",";
+                    });
+                    
+                }
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/saleman/updatesaleman/?type=' + type + '&oldman=' + oldman + '&newman=' + newman,
+                dataType: 'text',
+                data: 'allnewman=' + allnewman + '&carlist=' + carlist,
+                success: function (data) {
+                    if (data == 1) {
+                        $("#layer_ds").layer('hide');
+                        window.location.reload();
+                    }
+                    else {
+                        alert("操作失败");
+                    }
+                }
+            });
+            
+        });
+
+    });
+</script>
+
+
+</body>
+</html>

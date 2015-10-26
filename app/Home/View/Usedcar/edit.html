@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>编辑车源-{$cardata.title}</title>
+<link rel="shortcut icon" href="/public/images/favicon.ico" />
+<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
+<link href="/public/car/car.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery/jquery.dragsort-0.5.1.min.js"></script>
+<script type="text/javascript" src="/public/swfobject/swfobject.js"></script>
+<script type="text/javascript" src="/public/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/public/swfupload/handlers.js"></script>
+<script type="text/javascript" src="/public/car/addcar.js"></script>
+
+<script type="text/javascript">
+var WEB_IMG_URL = '{$Think.config.WEB_IMG_URL}';
+$(function(){ 
+	$("#CarImgsUl").dragsort({dragSelector:"li",placeHolderTemplate:"<li class='placeHolder'><div></div></li>"});
+	SlectMenu.init();
+	
+	$('#CarSubmit').click(function(){
+		if(CarValidate.validate()){
+			$('#CarSubmit').attr('disabled','disabled');
+			$('#form1').submit();
+		}
+	});
+	
+	var maxl=500//总长
+	document.onkeyup=function(){
+	   var s = $('#description').val().length;
+	   $('#description_count').html("已输入："+s+"/"+maxl+" 字符");
+	}
+});
+
+var swfu;
+window.onload = function () {
+	swfu = new SWFUpload({
+		// Backend Settings
+		upload_url: "{:U('Upload/Ajaxupload')}",
+		post_params: {"PHPSESSID": "<php> echo session_id(); </php>"},
+
+		// File Upload Settings
+		file_size_limit : "2 MB",	// 2MB
+		file_types : "*.jpg",
+		file_types_description : "JPG Images",
+		file_upload_limit : 0,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess,
+		upload_complete_handler : uploadComplete,
+		button_image_url : "",
+		button_placeholder_id : "spanButtonPlaceholder",
+		button_width: 155,
+		button_height: 135,
+		button_text : '',
+		button_text_style : '',
+		button_text_top_padding: 0,
+		button_text_left_padding: 18,
+		button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+		button_cursor: SWFUpload.CURSOR.HAND,
+		flash_url : "/public/swfupload/swfupload.swf",
+		custom_settings : {
+			upload_target : "divFileProgressContainer",
+			cancelButtonId: "clearUploadImage"
+		},
+		debug: false
+	});
+};
+</script>
+
+</head>
+
+<body>
+
+<include file="Public:header" />
+
+<div class="note">
+  <div class="note-return"><a href="/"><i class="icon"></i></a></div>
+  <div class="note-list-tab">
+	<div class="note-list-tab-cont">
+		<a class="issue" href="/usedcar/add/">发布车源</a>
+		<ul>
+			<li <eq name="map.status" value="1">class="current"</eq>><a href="/usedcar/?status=1">在售车源</a></li>
+			<li <eq name="map.status" value="2">class="current"</eq>><a href="/usedcar/?status=2">平行进口车</a></li>
+			<li <eq name="map.status" value="3">class="current"</eq>><a href="/usedcar/?status=3">下架车源</a></li>
+			<li <eq name="map.status" value="4">class="current"</eq>><a href="/usedcar/?status=4">已售</a></li>
+                        <li <eq name="Think.CONTROLLER_NAME" value="Saleman">class="current"</eq>><a href="/saleman/">员工管理</a></li>
+                        <li <eq name="Think.CONTROLLER_NAME" value="Notice">class="current"</eq>><a href="/notice/">系统通知</a></li> 
+                        <li <eq name="Think.ACTION_NAME" value="Password">class="current"</eq>><a href="/store/password/">修改密码</a></li><li>
+                        <li <eq name="Think.CONTROLLER_NAME" value="Store">class="current"</eq>><a href="/store/">公司信息</a></li>
+		</ul>
+	</div>
+  </div>
+</div>
+
+
+<div class="mydivbox">
+<div id="flashEditorContent">
+
+</div>
+</div>
+<div class="bgpopo"></div>
+<form id="form1" name="form1" method="post" action="/usedcar/update/">
+  <input type="hidden" value="{$cardata.id}" name="id" />
+  <notempty name="Think.get.status">
+  <input type="hidden" value="{$Think.get.status}" name="status" />
+  </notempty>
+  <div class="freecont">
+	<div class="fh3">
+        <span class="right">如需帮助，请拨打：<span class="font16">400-151-6868</span>，或联系技术QQ：475598014</span>
+        <h2>发布车源</h2>
+    </div>
+  <table width="900" border="0" align="center" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="35" align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="90" height="45" align="right">*车辆信息：</td>
+      <td><div>
+        <div class="dropdown">
+          <input id="brand_title" name="brand_title" class="input_select" type="text" value="{$car_brand.title}" readonly="readonly" />
+          <ul id="brand_div" class="dropdownUlList">
+		  <volist name="brand" id="vo">
+		  <li><a href="javascript:void(0);" onclick="SlectMenu.brand_click('{$vo.title}',{$vo.id});">{$vo.letter} {$vo.title}</a></li>
+		  </volist>
+		  </ul>
+          <input type="hidden" name="brand_value" id="brand_value" value="{$cardata.brand_id}" />
+        </div>
+        <div class="dropdown">
+          <input id="series_title" name="series_title" class="input_select" type="text" value="{$car_series.title}" readonly="readonly" />
+          <ul id="series_div" class="dropdownUlList"></ul>
+          <input type="hidden" name="series_value" id="series_value" value="{$cardata.series_id}" />
+        </div>
+        <div class="dropdown">
+          <input style="width:300px;" id="class_title" name="class_title" class="input_select" type="text" value="{$car_year.title} {$car_class.title}" readonly="readonly" />
+          <ul id="class_div" class="dropdownUlList" style="width:300px;"></ul>
+          <input type="hidden" name="class_value" id="class_value" value="{$cardata.class_id}" />
+        </div>
+      </div></td>
+    </tr>
+</table>
+<div class="line0"></div>
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="45" width="90" align="right">销售代表：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="saleman" name="saleman" style="width:90px;" class="input_select" type="text" value="{$salename.nickname}" readonly="readonly" />
+          <ul style="width:90px;" id="saleman_div" class="dropdownUlList">
+            <volist name="saleman" id="vo">
+              <li><a href="javascript:void(0);" rel="{$vo.id}" onclick="SlectMenu.saleman_click({$vo.id}, '{$vo.nickname}');">{$vo.nickname}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+		<input id="saleman_id" name="saleman_id" type="hidden" value="{$cardata.uid}" />
+      </td>
+    </tr>
+    <tr>
+      <td height="45" width="90" align="right">上牌时间：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="regtime_title" name="regtime_title" style="width:90px;" class="input_select" type="text" value="<eq name="timelist.regtime_title" value="">年份<else/>{$timelist.regtime_title}</eq>" readonly="readonly" />
+          <ul style="width:90px;" id="regtime_div" class="dropdownUlList">
+            <volist name="updatatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.regtime_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="regtimedate_title" name="regtimedate_title" class="input_select" type="text" value="<eq name="timelist.regtimedate_title" value="">日期<else/>{$timelist.regtimedate_title}</eq>" readonly="readonly" />
+          <ul style="width:60px;" id="regtimedate_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.regtimedate_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div id="regtimedate_checkclick" onclick="SlectMenu.SelectShangPai(this)" class="<eq name="timelist.regtimedate_title" value="">checkclickon<else/>checkclick</eq>">
+            <a href="javascript:void(0);">未上牌</a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">行驶里程：</td>
+      <td align="left"><input name="mileage" style="width:90px;" type="text" class="input_select" id="mileage" value="{$cardata.mileage}" />
+      (万)公里</td>
+    </tr>
+    <tr>
+      <td height="45" align="right">年检到期：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="inspeyear_title" name="inspeyear_title" style="width:90px;" class="input_select" type="text" value="<eq name="timelist.inspeyear_title" value="">年份<else/>{$timelist.inspeyear_title}</eq>" readonly="readonly" />
+          <ul style="width:90px;" id="inspeyear_div" class="dropdownUlList">
+            <volist name="datatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inspeyear_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="inspemonth_title" name="inspemonth_title" class="input_select" type="text" value="<eq name="timelist.inspemonth_title" value="">月份<else/>{$timelist.inspemonth_title}</eq>" readonly="readonly" />
+          <ul style="width:60px;" id="inspemonth_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inspemonth_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div id="inspeyear_checkclick" onclick="SlectMenu.SelectInspeyear(this)" class="<eq name="timelist.inspemonth_title" value="">checkclickon<else/>checkclick</eq>">
+            <a href="javascript:void(0);">已过期</a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">交强险到期：</td>
+      <td>
+        <div class="dropdown" style="width:90px;">
+          <input id="inuyear_title" name="inuyear_title" style="width:90px;" class="input_select" type="text" value="<eq name="timelist.inuyear_title" value="">年份<else/>{$timelist.inuyear_title}</eq>" readonly="readonly" />
+          <ul style="width:90px;" id="inuyear_div" class="dropdownUlList">
+            <volist name="datatimeyear" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inuyear_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div class="dropdown" style="width:60px;">
+          <input style="width:60px;" id="inumonth_title" name="inumonth_title" class="input_select" type="text" value="<eq name="timelist.inumonth_title" value="">日期<else/>{$timelist.inumonth_title}</eq>" readonly="readonly" />
+          <ul style="width:60px;" id="inumonth_div" class="dropdownUlList">
+            <volist name="datatimedate" id="vo">
+              <li><a href="#" rel="{$vo}" onclick="SlectMenu.inumonth_click('{$vo}');">{$vo}</a></li>
+            </volist>          	  
+          </ul>
+        </div>
+        <div id="inuyear_checkclick" onclick="SlectMenu.SelectInuyear(this)" class="<eq name="timelist.inumonth_title" value="">checkclickon<else/>checkclick</eq>">
+            <a href="javascript:void(0);">已过期</a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">过户手续：</td>
+      <td>
+            <label class="purpose"><input name="transfer" value="1" <eq name="cardata.transfer" value="1">checked="checked"</eq> class="lab-inp" type="radio">无</label>
+            <label class="purpose"><input name="transfer" value="2" <eq name="cardata.transfer" value="2">checked="checked"</eq> class="lab-inp" type="radio">有</label>
+      </td>
+    </tr>	
+    <tr>
+      <td height="45" align="right">商业险：</td>
+      <td>
+            <label class="purpose"><input name="commercial" <eq name="cardata.commercial" value="1">checked="checked"</eq> value="1" checked="checked" class="lab-inp" type="radio">无</label>
+            <label class="purpose"><input name="commercial" <eq name="cardata.commercial" value="2">checked="checked"</eq> value="2" class="lab-inp" type="radio">有</label>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right">售价：</td>
+      <td align="left"><input type="text" style="width:110px;" name="price" id="price" value="{$cardata.price}" class="input_select" /> 
+        &nbsp;万元</td>
+    </tr>
+    <tr>
+      <td height="45" align="right">首付：</td>
+      <td align="left"><input type="text" style="width:110px;" name="shoufu" id="shoufu" value="{$cardata.shoufu}" class="input_select" /> 
+        &nbsp;万元</td>
+    </tr>
+</table>
+<div class="line0"></div>
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="45" width="90" align="right" valign="top" class="nomar">上传图片：</td>
+      <td align="left" class="nomar">
+        <div class="uplo_pic">
+            <ul id="CarImgsUl">
+            <volist name="imglist" id="vo" key="k">
+              <li id="imageLi{$k}">
+                 <dl>
+                  <dt class="<eq name="vo" value="$data.cover">click_bor<else/>click_cover</eq>">
+                      <img width="120" height="90" src="{$Think.config.WEB_IMG_URL}{$vo}">
+                  </dt>
+                  <dd style="display:block;">
+                       <a href="javascript:void(0);" onclick="DragImage.editImageLi('{$Think.config.WEB_IMG_URL}{$vo}',{$k})">编辑</a>
+                  </dd>
+                  <dd style="display:block;">
+                       <a href="javascript:void(0);" onclick="DragImage.delImageLi({$k})">删除</a>
+                  </dd>
+                </dl>
+                <input name="filelist[]" type="hidden" value="{$vo}">
+              </li>
+            </volist>
+            </ul>
+              <div class="uplo_list">
+                  <div id="uploadModel2_flash" class="up-div">
+                      <span class="icon-up">
+                          <div id="flashObject2" class="up_zjfile">
+                              <span id="spanButtonPlaceholder"></span>
+                          </div>
+                      </span>
+                  </div>
+                  <div class="uplo_list-tx">
+                      <a id="pcUpload" class="cur" href="javascript:void(0);">选择图片</a>
+                  </div>
+              </div>
+        </div>
+        <div id="divFileProgressContainer" style="display: block;"></div>
+      </td>
+    </tr>
+    <tr>
+      <td height="45" align="right" valign="top">&nbsp;</td>
+      <td height="130" align="left" valign="top" id="div_prompt">
+      <div><img src="__PUBLIC__/images/pic-flash.png" style="width: 461px; height: 118px;padding-top:10px;" /></div>
+      </td>
+    </tr>
+</table>
+
+<div class="line0"></div>
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="35" align="right">燃料：</td>
+      <td align="left">
+            <label class="purpose"><input name="fuel" value="1" <eq name="cardata.fuel" value="1">checked="checked"</eq> checked="checked" class="lab-inp" type="radio">汽油</label>
+            <label class="purpose"><input name="fuel" value="2" <eq name="cardata.fuel" value="2">checked="checked"</eq> class="lab-inp" type="radio">柴油</label>
+	  </td>
+    </tr>
+    <tr>
+      <td width="90" height="60" align="right">用途：</td>
+      <td>
+            <label class="purpose"><input name="use" value="1" <eq name="cardata.use" value="1">checked="checked"</eq> checked="checked" class="lab-inp" type="radio">家用</label>
+            <label class="purpose"><input name="use" value="2" <eq name="cardata.use" value="2">checked="checked"</eq> class="lab-inp" type="radio">运营转私人</label>
+            <label class="purpose"><input name="use" value="3" <eq name="cardata.use" value="3">checked="checked"</eq> class="lab-inp" type="radio">单位用车</label>           
+      </td>
+    </tr>
+    <tr>
+      <td height="45" width="90" align="right" valign="top">车身颜色：</td>
+      <td>
+      <ul class="t_color" id="colorall">
+        <volist name="color" id="vo">
+            <li id="color{$vo.id}" onclick="SlectMenu.SelectColor({$vo.id})"<eq name="vo.id" value="$cardata.color_id"> class="click"</eq>>
+            <a href="javascript:void(0);"><span class="eq" style="background:{$vo.code};"></span>{$vo.title}</a>
+            </li>
+        </volist>
+      </ul>
+      <input type="hidden" id="color_id" name="color_id" value="{$cardata.color_id}" />
+      </td>
+    </tr>
+</table>
+
+<div class="line0"></div>
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" class="tw_table">
+    <tr>
+      <td height="45" width="90" align="right" valign="top">车主描述：</td>
+      <td align="left"><textarea name="description" cols="50" rows="5" id="description" class="input_select" style="width:470px;height:120px;">{$cardata.description}</textarea></td>
+    </tr>
+    <tr>
+      <td height="25" align="right">&nbsp;</td>
+      <td align="left"><span style="margin-left:350px; font-size:12px;" id="description_count">最多500个字符</span></td>
+    </tr>
+    <tr>
+    <tr>
+      <td height="60" align="right">&nbsp;</td>
+      <td align="left"><input name="" type="button" id="CarSubmit" /></td>
+    </tr>
+  </table>
+  </div>
+</form>
+
+<include file="Public:footer" />
+</body>
+</html>
