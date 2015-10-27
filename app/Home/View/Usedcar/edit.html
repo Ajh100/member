@@ -3,15 +3,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>编辑车源-{$cardata.title}</title>
-<link rel="shortcut icon" href="/public/images/favicon.ico" />
-<link href="/public/css/member.css" rel="stylesheet" type="text/css" />
-<link href="/public/car/car.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/public/js/jquery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="/public/js/jquery/jquery.dragsort-0.5.1.min.js"></script>
-<script type="text/javascript" src="/public/swfobject/swfobject.js"></script>
-<script type="text/javascript" src="/public/swfupload/swfupload.js"></script>
-<script type="text/javascript" src="/public/swfupload/handlers.js"></script>
-<script type="text/javascript" src="/public/car/addcar.js"></script>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="__PUBLIC__/css/member.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/car/car.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery/jquery.dragsort-0.5.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfobject/swfobject.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/swfupload/handlers.js"></script>
+<script type="text/javascript" src="__PUBLIC__/car/addcar.js"></script>
 
 <script type="text/javascript">
 var WEB_IMG_URL = '{$Think.config.WEB_IMG_URL}';
@@ -61,7 +61,7 @@ window.onload = function () {
 		button_text_left_padding: 18,
 		button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 		button_cursor: SWFUpload.CURSOR.HAND,
-		flash_url : "/public/swfupload/swfupload.swf",
+		flash_url : "__PUBLIC__/swfupload/swfupload.swf",
 		custom_settings : {
 			upload_target : "divFileProgressContainer",
 			cancelButtonId: "clearUploadImage"

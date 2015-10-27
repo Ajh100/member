@@ -5,10 +5,10 @@ return array(
     
     /* 数据库设�? */
     'DB_TYPE'               =>  'mysql',
-    'DB_HOST'               =>  'localhost',
+    'DB_HOST'               =>  '104.131.144.192',
     'DB_NAME'               =>  'jh100', 
-    'DB_USER'               =>  'root', 
-    'DB_PWD'                =>  'Kiihy*^&yihi6867',
+    'DB_USER'               =>  'xxg3053', 
+    'DB_PWD'                =>  'xxg111063053',
     'DB_PREFIX' => 'tc_', 
     'DB_CHARSET'=> 'utf8',
     
